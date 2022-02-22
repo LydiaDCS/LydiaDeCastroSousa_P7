@@ -77,23 +77,15 @@ exports.modifySauce = (req, res, next) => {
 //SUPPRIMER UNE SAUCE: DELETE siseulement sauce.userId == auteur de la requête
 exports.deleteSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
+        //avant de supprimer objet de base, je le recherche pour avoir accès à l'url de l'image pour en extraire le nom du fichier (2eme element apres /images/) et ainsi supprimer le fichier
         .then((sauce) => {
-            if (!sauce) {
-                res.status(404).json({ error: new Error("Cette sauce n'existe pas!") });
-            }
-            if (sauce.userId !== req.auth.userId) {
-                res.status(400).json({ error: new Error("Requête non autorisée!") });
-            }
-            return sauce;
-        })
-        //avant de supprimer objet de base, je recherche l'objet pour avoir accès à l'url de l'image pour en extraire le nom du fichier (2eme element apres /images/) et ainsi supprimer le fichier
-        .then((sauce) => {
+            //on récupère le nom du fichier
             const filename = sauce.imageUrl.split('/images/')[1];
             //je supprime le fichier avec fs.unlink
             fs.unlink(`images/${filename}`, () => {
                 //quant fichier supprimé, on supprime l'ojet de la base de données
                 Sauce.deleteOne({ _id: req.params.id })
-                    .then(() => res.status(200).json({ message: 'Sauce supprimé !' }))
+                    .then(() => res.status(200).json({ message: 'Sauce supprimée !' }))
                     .catch(error => res.status(400).json({ error }));
             });
         })
