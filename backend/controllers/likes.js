@@ -7,6 +7,8 @@
  exports.likeSauce = (req, res, next) => {
      //je récupère le champ like
      const likeStatus = req.body.like;
+     //je récupère le userId
+     const userId = req.body.userId;
      //je récupère l'id de la sauce  de l'url
      const sauceId = req.params.id;
 
@@ -14,7 +16,7 @@
      switch (likeStatus) {
          //Ajout d'un like
          case 1:
-             Sauce.updateOne({ _id: sauceId }, { likeStatus: +1 })
+             Sauce.updateOne({ _id: sauceId }, { usersLiked: userId }, { likeStatus: +1 })
                  .then(() => res.status(201).json({ message: "Ajout d'un like !" }))
                  .catch(error => res.status(400).json({ error }));
              break;
