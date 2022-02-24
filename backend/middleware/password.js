@@ -20,5 +20,4 @@ module.exports = (req, res, next) => {
     } else {
         return res.status(401).json({ error: "Le mot de passe n'est pas assez fort!" });
     }
-
 };
