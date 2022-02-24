@@ -14,7 +14,7 @@ const multer = require('../middleware/multer-config');
 const saucesCtrl = require('../controllers/sauce');
 const likeCtrl = require('../controllers/likes');
 
-//Enregistrement des routes dans le router et fonctions du controllers
+//Enregistrement des routes dans le router et fonctions du controllers pour proteger les routes
 router.post('/', auth, multer, saucesCtrl.createSauce);
 router.put('/:id', auth, multer, saucesCtrl.modifySauce);
 router.delete('/:id', auth, saucesCtrl.deleteSauce);

@@ -1,4 +1,4 @@
-//j'importe le package de cryptage bcrypt
+//j'importe le package de cryptage bcrypt pour hasher mot de passe
 const bcrypt = require('bcrypt');
 
 //j'importe le package pour créer et vérifier des tokens

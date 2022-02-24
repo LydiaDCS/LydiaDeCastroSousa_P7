@@ -5,25 +5,28 @@
 
  //middleware like
  exports.likeSauce = (req, res, next) => {
-     Sauce.updateOne({ _id: req.params.id })
+     Sauce.findOne({ _id: req.params.id })
          .then((sauce) => {
              //je définie variable pour recevoir les messages
              let message;
-             //si l'utilisateur aime la sauce et que le Array ne contient pas le userId
+             Sauce.updateOne({ _id: req.params.id })
+                 //si l'utilisateur aime la sauce et que le Array ne contient pas le userId
              if (req.body.likes === 1 && !sauce.usersLiked.includes(req.body.userId)) {
                  //on push dans le tableau le userId
-                 sauce.usersLiked.push(req.body.userId);
+                 $push: { usersLiked: req.body.userId }
                  //incrementation de la valeur de likes
                  sauce.likes++;
                  message = "L'utilisateur aime cette sauce !";
              }
-             //si l'utilisateur n'aime pas la sauce
+             Sauce.updateOne({ _id: req.params.id })
+                 //si l'utilisateur n'aime pas la sauce
              if (req.body.likes === -1 && !sauce.usersDisliked.includes(req.body.userId)) {
-                 sauce.usersLiked.push(req.body.userId);
+                 $push: { usersDisliked: req.body.userId }
                  sauce.dislikes++;
                  message = "L'utilisateur n'aime pas cette sauce !";
              }
-             //si l'utilisateur change son appréciation
+             Sauce.updateOne({ _id: req.params.id })
+                 //si l'utilisateur change son appréciation
              if (req.body.likes === 0) {
                  if (sauce.usersLiked.includes(req.body.userId)) {
                      sauce.usersLiked.splice(req.body.userId);
@@ -35,10 +38,7 @@
                      message = "L'utilisateur a retiré sa mention j'aime pas!";
                  }
              }
-
              return res.status(200).json({ message: message });
-
-
 
              /* //je récupère le champ like
              const likeStatus = req.body.like;

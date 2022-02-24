@@ -5,17 +5,23 @@ require('dotenv').config();
 //j'importe express
 const express = require('express');
 
+//j'importe helmet -sécuriser entête http contre attaques XSS
+const helmet = require('helmet');
+
+//j'importe express-rate-limit pour limiter les requêtes
+const rateLimit = require('express-rate-limit');
+
 //j'importe mongosse
 const mongoose = require('mongoose');
 
 //Accès au chemin de notre système de fichiers
 const path = require('path');
+
+//Importation des routes
 const saucesRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
-//je crée l'application express
-const app = express();
-
+//Connexion à mongoose qui gère la base de données Mango DB
 mongoose.connect(`mongodb+srv://${process.env.BD_USERNAME}:${process.env.BD_SECRET_KEY}@cluster0.u4xnl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -23,14 +29,33 @@ mongoose.connect(`mongodb+srv://${process.env.BD_USERNAME}:${process.env.BD_SECR
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
+//Limiter le temps de chaque session
+const limiter = rateLimit({
+    windowMs: 20 * 60 * 1000, // 20 minutes 
+    max: 100, // Limite chaque IP à 100 requêtes par `window` (ici, par 15 minutes ) 
+    standardHeaders: true, // Renvoie les informations de limite de débit dans les en-têtes `RateLimit-*` 
+    legacyHeaders: false, // Désactive les en-têtes `X-RateLimit-*` 
+});
+
+//je crée l'application express et appel des dépendances
+const app = express();
+
+//permettre le chargement des images
+app.use(helmet({
+    crossOriginResourcePolicy: false
+}));
+
+app.use(limiter);
+
+app.use(express.json());
+
+//Gestion des erreurs CORS
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
-
-app.use(express.json());
 
 //middleware pour servir dossier images
 app.use('/images', express.static(path.join(__dirname, 'images')));
