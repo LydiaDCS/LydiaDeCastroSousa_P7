@@ -1,11 +1,11 @@
-//j'importe le modèle de la sauce
+//j'importe le modèle de la sauce à liker
 const Sauce = require('../models/modelSauce');
 
-// export du middleware likeSauce
+// export du middleware/fonction likeSauce
 exports.likeSauce = (req, res, next) => {
     // récupère le champs likes
     const likeStatus = req.body.like;
-    // récupère l'id sauce de l'URL
+    // récupère l'id sauce du paramètre de la requête (de l'url)
     const sauceId = req.params.id;
     // récupère le userId
     const userId = req.body.userId;
@@ -14,7 +14,9 @@ exports.likeSauce = (req, res, next) => {
         // ajout d'un like
         case 1:
             Sauce.updateOne({ _id: sauceId }, {
+                    //j'incrémente le champs likes
                     $inc: { likes: +1 },
+                    //j'ajoute le userId au tableau usersLiked
                     $push: { usersLiked: req.body.userId }
                 })
                 .then(() => res.status(201).json({ message: 'Ajout du like !' }))
@@ -35,10 +37,12 @@ exports.likeSauce = (req, res, next) => {
         case 0:
             Sauce.findOne({ _id: sauceId })
                 .then(sauce => {
-                    //Supprimer son like de UsersLiked
+                    //Supprimer son like du tableau UsersLiked
                     if (sauce.usersLiked.includes(userId)) {
                         Sauce.updateOne({ _id: sauceId }, {
+                                //je retire le like du champs likes
                                 $inc: { likes: -1 },
+                                // je retire le userId du tableau usersLiked
                                 $pull: { usersLiked: userId }
                             })
                             .then(() => res.status(201).json({ message: "Suppression du like !" }))

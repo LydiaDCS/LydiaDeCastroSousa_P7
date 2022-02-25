@@ -4,7 +4,7 @@ const Sauce = require('../models/modelSauce');
 //j'importe le package fs de node pour avoir accès aux différentes opérations liées au système de fichiers
 const fs = require('fs');
 
-//Récupérer toutes les sauces avec la méthode find
+//Récupérer toutes les sauces avec la méthode find :GET
 exports.getAllSauces = (req, res, next) => {
     Sauce.find().then(
         (sauces) => {
@@ -19,7 +19,7 @@ exports.getAllSauces = (req, res, next) => {
     );
 };
 
-//Recupérer une seule sauce avec la méthode findOne
+//Recupérer une seule sauce avec la méthode findOne : GET
 exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({
         _id: req.params.id
@@ -36,14 +36,19 @@ exports.getOneSauce = (req, res, next) => {
     );
 };
 
-//AJOUTER UNE SAUCE: POST puis save
+//Ajouter une sauce: POST
 exports.createSauce = (req, res, next) => {
+    //je récupère le champs de la requête en le transformant en objet
     const sauceObject = JSON.parse(req.body.sauce);
+    //je supprime l'id généré automatiquement
     delete sauceObject._id;
+    //je crée une nouvelle instance de sauce
     const sauce = new Sauce({
         ...sauceObject,
+        //je génère l'url de l'image: http /https + nom d'hôte + nom du fichier
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
+    //j'enregistre la sauce dans la base de données 
     sauce.save()
         .then(() => res.status(201).json({ message: 'Sauce enregistrée !' }))
         .catch(error => res.status(400).json({ error }));
@@ -51,13 +56,15 @@ exports.createSauce = (req, res, next) => {
 
 //Modifier une sauce: PUT avec la méthode updateOne
 exports.modifySauce = (req, res, next) => {
-    //si il y a un fichier
+    //Opérateur terniaire pour vérifier s'il existe un fichier image ou non
     const sauceObject = req.file ? {
-        //on récupère la chaîne de caractère et on la parse en objet
-        ...JSON.parse(req.body.sauce),
-        //on modifie l'image url sinon on prend le corps de la requête, la sauce créée en prenant son id pour correspondre identifiant paramètre de requête
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : {...req.body };
+            //si il y a un fichier, on récupère la chaîne de caractère et on la parse en objet javascript
+            ...JSON.parse(req.body.sauce),
+            //on modifie l'image url 
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        } :
+        /*sinon on prend le corps de la requête et on utilise le paramètre id de la requête pour trouver la sauce et la modifier avec le même _id*/
+        {...req.body };
     Sauce.updateOne({ _id: req.params.id }, {...sauceObject, _id: req.params.id })
         .then(
             () => {
@@ -74,12 +81,12 @@ exports.modifySauce = (req, res, next) => {
         );
 };
 
-//SUPPRIMER UNE SAUCE: DELETE siseulement sauce.userId == auteur de la requête
+//Supprimer une sauce: DELETE si seulement sauce.userId == auteur de la requête
 exports.deleteSauce = (req, res, next) => {
+    //recherche la sauce
     Sauce.findOne({ _id: req.params.id })
-        //avant de supprimer objet de base, je le recherche pour avoir accès à l'url de l'image pour en extraire le nom du fichier (2eme element apres /images/) et ainsi supprimer le fichier
         .then((sauce) => {
-            //on récupère le nom du fichier
+            //on récupère le nom du fichier grâce à l'url de l'image (2ème élément après /images/)
             const filename = sauce.imageUrl.split('/images/')[1];
             //je supprime le fichier avec fs.unlink
             fs.unlink(`images/${filename}`, () => {
