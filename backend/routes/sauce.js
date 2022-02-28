@@ -20,7 +20,7 @@ router.delete('/:id', auth, saucesCtrl.deleteSauce);
 router.get('/:id', auth, saucesCtrl.getOneSauce);
 router.get('/', auth, saucesCtrl.getAllSauces);
 //liker une sauce
-router.post('/:id/like', auth, multer, likeCtrl.likeSauce);
+router.post('/:id/like', auth, likeCtrl.likeSauce);
 
 //export du router
 module.exports = router;
