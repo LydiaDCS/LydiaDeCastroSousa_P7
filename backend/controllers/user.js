@@ -1,6 +1,9 @@
 //j'importe le package de cryptage bcrypt pour hasher mot de passe
 const bcrypt = require('bcrypt');
 
+//j'importe crypto-js pour crypter l'adresse mail 
+const cryptojs = require('crypto-js');
+
 //j'importe le package pour créer et vérifier des tokens
 const jwt = require('jsonwebtoken');
 
@@ -9,12 +12,16 @@ const User = require('../models/user');
 
 //enregistrement de nouveaux utilisateurs -- middleware avec fonction signup
 exports.signup = (req, res, next) => {
+
+    //Chiffrer l'email avant de l'envoyer dans la base de données
+    const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, "CLE_SECRETE").toString();
+
     //je crypte le mot de passe avec hash, 10 tours
     bcrypt.hash(req.body.password, 10)
         //je recupère le hash, l'enregistre dans un nouvel utilisateur et j'enregistre le hash en mot de passe
         .then(hash => {
             const user = new User({
-                email: req.body.email,
+                email: emailCryptoJs,
                 password: hash
             });
             //j'enregistre le user dans la base de données
