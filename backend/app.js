@@ -51,7 +51,6 @@ app.use(express.json());
 // - req.params 
 // - req.headers 
 // - req.query 
-
 // Pour supprimer des données à l'aide de ces valeurs par défaut : 
 app.use(mongoSanitize());
 
