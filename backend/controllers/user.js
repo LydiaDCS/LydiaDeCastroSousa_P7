@@ -35,6 +35,9 @@ exports.signup = (req, res, next) => {
 //Connexion d'utilisateur existant -- middleware avec fonction login
 exports.login = (req, res, next) => {
 
+    //chiffrer l'email dans la base de donnée 
+    const emailCryptoJs = cryptojs.HmacSHA512(req.body.email, "CLE_SECRETE").toString();
+
     //Je récupère l'utilisateur de la base de données
     User.findOne({ email: emailCryptoJs })
         .then(user => {

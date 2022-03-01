@@ -43,6 +43,9 @@ const limiter = rateLimit({
 //je crée l'application express et appel des dépendances
 const app = express();
 
+//utilise pour analyser les corps json (comme bodyparser)
+app.use(express.json());
+
 // Par défaut, $ et . les caractères sont complètement supprimés de l'entrée fournie par l'utilisateur aux emplacements suivants : 
 // - req.body 
 // - req.params 
@@ -59,8 +62,6 @@ app.use(helmet({
 
 app.use(limiter);
 
-app.use(express.json());
-
 //Gestion des erreurs CORS
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -68,7 +69,6 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
-
 
 //middleware pour servir dossier images
 app.use('/images', express.static(path.join(__dirname, 'images')));
