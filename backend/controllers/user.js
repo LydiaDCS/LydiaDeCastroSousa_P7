@@ -16,9 +16,6 @@ exports.signup = (req, res, next) => {
     //chiffrer l'email dans la base de donnée 
     const emailCryptoJs = cryptojs.HmacSHA512(req.body.email, "CLE_SECRETE").toString();
 
-    console.log("--->CONTENU: emailCryptoJS - controllers/user");
-    console.log(emailCryptoJs);
-
     //je crypte le mot de passe avec hash, 10 tours
     bcrypt.hash(req.body.password, 10)
         //je recupère le hash, l'enregistre dans un nouvel utilisateur et j'enregistre le hash en mot de passe
@@ -38,11 +35,8 @@ exports.signup = (req, res, next) => {
 //Connexion d'utilisateur existant -- middleware avec fonction login
 exports.login = (req, res, next) => {
 
-    //Déchiffrer l'email dans la base de donnée 
-    const emailDecrypted = cryptojs.HmacSHA512(encrypted, "CLE_SECRETE").toString(cryptojs.enc.Utf8);
-
     //Je récupère l'utilisateur de la base de données
-    User.findOne({ email: emailDecrypted })
+    User.findOne({ email: emailCryptoJs })
         .then(user => {
             //si email pas bon = pas de user
             if (!user) {
