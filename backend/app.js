@@ -52,14 +52,6 @@ const app = express();
 // Pour supprimer des données à l'aide de ces valeurs par défaut : 
 app.use(mongoSanitize());
 
-// A la fois allowDots et replaceWith 
-app.use(
-    mongoSanitize({
-        allowDots: true,
-        replaceWith: '_',
-    }),
-);
-
 //permettre le chargement des images
 app.use(helmet({
     crossOriginResourcePolicy: false

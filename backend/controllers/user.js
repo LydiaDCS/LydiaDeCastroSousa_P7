@@ -13,8 +13,11 @@ const User = require('../models/user');
 //enregistrement de nouveaux utilisateurs -- middleware avec fonction signup
 exports.signup = (req, res, next) => {
 
-    //Chiffrer l'email avant de l'envoyer dans la base de données
-    const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, "CLE_SECRETE").toString();
+    //chiffrer l'email dans la base de donnée 
+    const emailCryptoJs = cryptojs.HmacSHA512(req.body.email, "CLE_SECRETE").toString();
+
+    console.log("--->CONTENU: emailCryptoJS - controllers/user");
+    console.log(emailCryptoJs);
 
     //je crypte le mot de passe avec hash, 10 tours
     bcrypt.hash(req.body.password, 10)
@@ -34,14 +37,19 @@ exports.signup = (req, res, next) => {
 
 //Connexion d'utilisateur existant -- middleware avec fonction login
 exports.login = (req, res, next) => {
+
+    //Déchiffrer l'email dans la base de donnée 
+    const emailDecrypted = cryptojs.HmacSHA512(encrypted, "CLE_SECRETE").toString(cryptojs.enc.Utf8);
+
     //Je récupère l'utilisateur de la base de données
-    User.findOne({ email: req.body.email })
+    User.findOne({ email: emailDecrypted })
         .then(user => {
             //si email pas bon = pas de user
             if (!user) {
                 //non autorisé
                 return res.status(401).json({ error: 'Utilisateur non trouvé !' });
             }
+
             //si user, on compare le mot de passe envoyer par l'utilisateur qui veut se connecter avec le hash du user dans la base de données
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
