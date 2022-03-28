@@ -1,26 +1,29 @@
 {
-  "name": "p7groupomania",
-  "version": "1.0.0",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "mysql": "^2.18.1",
-    "nodemon": "^2.0.15"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LydiaDCS/LydiaDeCastroSousa_P7.git"
-  },
-  "bugs": {
-    "url": "https://github.com/LydiaDCS/LydiaDeCastroSousa_P7/issues"
-  },
-  "homepage": "https://github.com/LydiaDCS/LydiaDeCastroSousa_P7#readme",
-  "description": ""
+    "name": "p7groupomania",
+    "version": "1.0.0",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js",
+        "devStart": "nodemon server.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.2",
+        "dotenv": "^16.0.0",
+        "express": "^4.17.3",
+        "mysql": "^2.18.1",
+        "nodemon": "^2.0.15",
+        "sequelize": "^6.17.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/LydiaDCS/LydiaDeCastroSousa_P7.git"
+    },
+    "bugs": {
+        "url": "https://github.com/LydiaDCS/LydiaDeCastroSousa_P7/issues"
+    },
+    "homepage": "https://github.com/LydiaDCS/LydiaDeCastroSousa_P7#readme",
+    "description": ""
 }
