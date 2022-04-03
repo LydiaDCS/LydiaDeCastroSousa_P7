@@ -1,8 +1,7 @@
 import React from 'react';
 import "../styles/Header.css"
 
-
-const Header = () => {
+const Header2 = () => {
   return (
     <div>
       <div className='logo'>
@@ -11,9 +10,9 @@ const Header = () => {
     alt='logo entreprise'
     />
     </div>
-    
+      
     </div>
   );
 };
 
-export default Header;
+export default Header2;

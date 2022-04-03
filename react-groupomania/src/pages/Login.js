@@ -1,33 +1,35 @@
 import React from 'react';
 import "../styles/Login.css"
-import Navigation from '../components/Navigation';
-import { NavLink } from 'react-router-dom';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import Button_sign from '../components/Button_sign';
+
+
 
 const Login = () => {
-    return ( < div >
-        <
-        Navigation / >
-        <
-        h1 > Groupomania < /h1>
+    return ( < div>
+        <Header/>
+        <div>
+            <form className='formuser'>
+            <label for="email">Email :</label>
+            <input type="email" name="email" placeholder="Email" />
+            <label for="password">Mot de passe:</label>
+            <input type="text" name="password" placeholder="Password"/>
+             
+      <p>Connectez-vous!</p>
+            <button>
+          <a class="buttoninfo" href="Forum">Connexion</a> 
+          </button>
 
-        <
-        div className = 'form' >
-        <
-        label
-        for = "email" > Email: < /label> <
-        input type = "email"
-        name = "email" / >
-        <
-        label
-        for = "password" > Mot de passe: < /label> <
-        input type = "text"
-        name = "password" / >
-
-
-        <
-        button > Submit < /button> <
-        /div>  <
-        /div>
+          <div className='redirection'>
+              <hr/>
+              <p>Pas encore inscrit ?</p>
+          <Button_sign/>
+          </div>
+            </form> 
+            <Footer/>
+            </div>
+    </div>
     );
 };
 

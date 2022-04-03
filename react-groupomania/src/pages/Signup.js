@@ -1,45 +1,57 @@
-import React from 'react';
-import Navigation from '../components/Navigation';
+
+
+import "../styles/Signup.css"
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import Button_log from '../components/Button_log';
+import {useForm} from 'react-hook-form';
 
 const Signup = () => {
-    return ( <
-        div >
-        <
-        Navigation / >
-        <
-        h1 > Groupomania < /h1>
+  const {register, handleSubmit, errors} = useForm();
+  const onSubmit = (form) => {
+    alert(`short input :${form.limitedLength}`);
+  };
 
-        <
-        div className = 'form' >
-        <
-        label
-        for = "firstName" > Prénom: < /label> <
-        input type = "text"
-        name = "firstName" / >
-        <
-        label
-        for = "lastName" > Nom: < /label> <
-        input type = "text"
-        name = "lastName" / >
-        <
-        label
-        for = "email" > Email: < /label> <
-        input type = "email"
-        name = "email" / >
-        <
-        label
-        for = "password" > Mot de passe: < /label> <
-        input type = "text"
-        name = "password" / >
+    return (
+    <div>
+      <Header/>
+        <div className='log'>
+        <Button_log/>
+        </div>
+        <form className='form' onSubmit={handleSubmit((data)=>{
+          console.log(data);
+        })}>
+        <label for="firstName">Prénom :</label>
+        <input {...register ("firstName", {required : true})} type="text" placeholder="Prénom" 
+      
+        />
+        
+        <label for="lastName">Nom :</label>
+        <input type="text" {...register ("lastName", {required : true, minlengh:2})} placeholder="Nom" 
+        
+        />
+        <label for="email">Email :</label>
+        <input type="email" {...register ("email", {required:true, pattern: /^[a-zA-Zéèàïç0-9.!^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/g})} placeholder="Email" 
+        
+        />
+        <label for="password">Mot de passe :</label>
+        <input type="text" {...register ("password", {required:true, minlengh:4 })} placeholder="Password" 
+        />
+      
+      <p>Inscrivez-vous!</p>
 
-
-        <
-        button > Submit < /button> <
-        /div> 
-
-        <
-        /div>
-    );
+        <button>
+         <a class="buttoninfo" href="Forum" >
+           S'inscrire
+        </a> 
+        </button>
+        
+      
+        </form> 
+        <Footer/>
+    </div>
+  );
 };
+
 
 export default Signup;

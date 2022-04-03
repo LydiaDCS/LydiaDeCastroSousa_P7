@@ -1,66 +1,61 @@
-require('dotenv').config({ path: './config/.env' })
+/*j'importe dotenv pour gérer les variables d'environnement
+.env*/
+require('dotenv').config({ path: './config/.env'})
+//console.log(process.env);
 
 //j'importe l'application express pour créer plus facile mon serveur
 const express = require('express');
+
+//Pour empêcher les attaques par injection de sélecteur de requête: nettoyer les données reçues
+const mongoSanitize = require('express-mongo-sanitize');
+
+//j'importe helmet -sécuriser entête http contre attaques XSS
+const helmet = require('helmet');
+
+//j'importe express-rate-limit pour limiter les requêtes
+const rateLimit = require('express-rate-limit');
 
 //Importation des routes
 const forumRoutes = require('./routes/forum');
 const profilRoutes = require('./routes/profil');
 const userRoutes = require('./routes/user');
 
-//j'importe mysql
-const mysql = require('mysql');
+//Accès au chemin de notre système de fichiers
+const path = require('path');
 
-//créer connexion à la base de données Mysql
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'lydiaDCS24!',
-    database: 'groupomania'
-});
 
-//se Connecter
-db.connect((err) => {
-    if (err) {
-        return err;
-    }
-    console.log('Connecté à la base de données MySQL!');
-    db.query("CREATE DATABASE nodemysql", function(err, result) {
-        if (err) throw err;
-        console.log("Base de données créée !");
-    });
-
-});
-
-//Creation de la BDD à travers une route get //middleware
-app.get('/createdb', (req, res) => {
-    //requête
-    let sql = 'CREATE DATABASE nodemysql';
-    db.query(sql, (err, result) => {
-        if (err) {
-            throw err;
-        }
-        console.log(result);
-        res.send('database created...');
-
-    });
-});
-
-//Créer une table
-app.get('/createpoststable', (req, res) => {
-    let sql = 'CREATE TABLE posts(id int AUTO_INCREMENT, title VARCHAR(255), body VARCHAR(255), PRIMARY KEY id)';
-    db.query(sql, (err, result) => {
-        if (err) throw err;
-        console.log(result);
-        res.send('Posts table create...');
-
-    });
+//Limiter le temps de chaque session
+const limiter = rateLimit({
+    windowMs: 20 * 60 * 1000, // 20 minutes 
+    max: 100, // Limite chaque IP à 100 requêtes par `window` (ici, par 20 minutes ) 
+    standardHeaders: true, // Renvoie les informations de limite de débit dans les en-têtes `RateLimit-*` 
+    legacyHeaders: false, // Désactive les en-têtes `X-RateLimit-*` 
 });
 
 //je crée mon app avec express
 const app = express();
 
-//Gérer requête POST 
+app.use(mongoSanitize());
+
+//permettre le chargement des images
+app.use(helmet({
+    crossOriginResourcePolicy: false
+}));
+
+app.use(limiter);
+
+
+//j'importe mysql
+const mysql = require('mysql');
+
+const db = require('./config/database');
+
+db.authenticate()
+.then(()=>console.log('Connexion à la base de données Mysql...'))
+.catch(err=> console.log('Error: '+ err))
+
+
+//utilise pour analyser les corps json (comme bodyparser)
 app.use(express.json());
 
 //Erreur CROS
@@ -72,14 +67,13 @@ app.use((req, res, next) => {
 });
 
 //j'enregistre les routes
-app.use('/api/forum', forumRoutes)
-app.use('/api/profil', profilRoutes);
-app.use('/api/auth', userRoutes);
+app.use('/forum', forumRoutes)
+app.use('/profil', profilRoutes); 
+app.use('/auth', userRoutes);
 
-//Accès au chemin de notre système de fichiers
-const path = require('path');
+
 //middleware pour servir dossier images
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //j'exporte l'application
-module.exports = app;
+module.exports = app; 

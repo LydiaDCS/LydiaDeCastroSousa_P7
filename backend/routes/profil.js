@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
+//j'importe middleware d'authentification
+const auth = require('../middleware/auth');
 
-const stuffCtrl = require('../controllers/stuff');
+//j'importe middleware gestion enregistrement de fichiers (pour fichier images)
+const multer = require('../middleware/multer-config');
 
-router.get('/', stuffCtrl.getAllStuff);
-router.post('/', stuffCtrl.createThing);
-router.get('/:id', stuffCtrl.getOneThing);
-router.put('/:id', stuffCtrl.modifyThing);
-router.delete('/:id', stuffCtrl.deleteThing);
+const profilCtrl = require('../controllers/profil');
+
+router.get('/', auth, profilCtrl.getAllStuff);
+router.post('/', auth, multer, profilCtrl.createThing);
+router.get('/:id',auth, profilCtrl.getOneThing);
+router.put('/:id', auth, multer, profilCtrl.modifyThing);
+router.delete('/:id',auth, profilCtrl.deleteThing);
 
 module.exports = router;

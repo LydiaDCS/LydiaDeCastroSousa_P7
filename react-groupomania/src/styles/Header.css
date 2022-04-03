@@ -1,0 +1,23 @@
+body {
+    width: 100%;
+}
+
+.logo {
+    text-align: start;
+    background-color: #FA8072;
+    margin-bottom: 63px;
+    width: auto;
+    padding: 0px 2% 10px 2%;
+    height: 90px;
+}
+
+@media screen and (min-width: 180px) and (max-width: 700px) {
+    .logo {
+        text-align: center;
+    }
+}
+
+img {
+    width: 350px;
+    padding: 15px;
+}
