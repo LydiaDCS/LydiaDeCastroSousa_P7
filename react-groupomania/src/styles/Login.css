@@ -72,3 +72,7 @@ hr {
     align-items: center;
     justify-content: center;
 }
+
+.msgerror {
+    color: red;
+}

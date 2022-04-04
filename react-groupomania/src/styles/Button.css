@@ -6,7 +6,8 @@ li {
     margin-top: 10px;
 }
 
-li:hover {
+li:hover,
+i:hover {
     color: black;
 }
 
@@ -33,4 +34,10 @@ a {
         margin: 10%;
         width: 100%;
     }
+}
+
+i {
+    color: #fa8072;
+    font-size: 30px;
+    margin: 15px;
 }

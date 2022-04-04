@@ -23,7 +23,6 @@ const Signup = () => {
         })}>
         <label for="firstName">Prénom :</label>
         <input {...register ("firstName", {required : true})} type="text" placeholder="Prénom" 
-      
         />
         
         <label for="lastName">Nom :</label>
@@ -40,8 +39,8 @@ const Signup = () => {
       
       <p>Inscrivez-vous!</p>
 
-        <button>
-         <a class="buttoninfo" href="Forum" >
+        <button type="submit">
+         <a class="buttoninfo" /* href="Forum" */ >
            S'inscrire
         </a> 
         </button>

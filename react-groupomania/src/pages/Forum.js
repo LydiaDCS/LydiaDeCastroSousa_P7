@@ -3,17 +3,23 @@ import "../styles/Forum.css"
 import Footer from '../components/Footer';
 import Profil from '../components/Profil'
 import Header2 from '../components/Header2';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-
-
+import Button_deconnect from '../components/Button_deconnect';
+import Button_forum from '../components/Button_forum';
 
 const Forum = () => {
     return ( <div >
         <Header2/>
         <div className='page'>
-            
-        <Profil/>
+            <nav className='nav'>
+                <ul className='nav_list'>
+                    <a href=''>
+                        <i class="far fa-comments"></i>
+                    </a>
+                    <Profil/>
+                    <Button_deconnect/>
+                    <Button_forum/>
+                </ul>
+        </nav>
         <section className='main'>
         <h1 > Forum </h1> <br/>
         <p > Lorem ipsum, dolor sit amet consectetur adipisicing elit.Architecto enim provident quaerat est sapiente officia aperiam corrupti, perspiciatis molestiae iusto illo nam recusandae, velit, eos rerum exercitationem odio dolore explicabo optio et doloribus ? Odio debitis illo iure, ad, a earum eius unde porro deserunt nobis officiis repudiandae voluptatibus iusto ? Fugit eaque labore recusandae doloremque ut voluptatibus, ad quisquam velit, esse voluptates a numquam necessitatibus, voluptatum itaque dolor sit accusantium impedit error hic atque quidem sequi!Magni ut autem, unde, obcaecati assumenda molestias quos in , perspiciatis consequatur mollitia voluptas!Facere corporis magni qui veniam maxime modi eaque, accusamus optio eligendi ad ? </p> <br/>

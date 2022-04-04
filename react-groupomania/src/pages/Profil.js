@@ -35,10 +35,10 @@ const Profil = () => {
             <button className="deletebutton">Supprimer</button>
             <button className="modifybutton">Modifier</button>
             <div className='buttons'>
-            <Button_deconnect/>
             <Button_forum/>
+            <Button_deconnect/>
             </div>
-        </div>
+            </div>
         <Footer/>
         </div>
     );

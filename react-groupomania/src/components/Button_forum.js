@@ -5,9 +5,7 @@ const Button_forum = () => {
   return (
     <div>
       <NavLink to ="/Forum">
-      <button className='return_forum'>
-        Forum
-      </button>
+      <i class="fas fa-home"></i>
       </NavLink>
     </div>
   );
