@@ -7,8 +7,8 @@ import Button_forum from '../components/Button_forum';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-class Profil extends React.Component{
-    render(){
+const Profil = () => {
+    
     return ( <div >
         <Header/>
         <div className='container'>
@@ -25,10 +25,6 @@ class Profil extends React.Component{
                 <br/>
                 <p>Prénom :</p>
                 <br/>
-                <p>Date de naissance :</p>
-                <br/>
-                <p>Ville :</p> 
-                <br/>
             </div>
             </div>
             </section>
@@ -42,7 +38,6 @@ class Profil extends React.Component{
         <Footer/>
         </div>
     );
-    }
 };
 
 export default Profil;

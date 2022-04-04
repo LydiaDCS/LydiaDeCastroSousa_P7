@@ -12,6 +12,7 @@ const User = require('../models/user');
 
 //enregistrement de nouveaux utilisateurs -- middleware avec fonction signup
 exports.signup = (req, res, next) => {
+    console.log(req.body);
 
     //chiffrer l'email dans la base de donnée 
     const emailCryptoJs = cryptojs.HmacSHA512(req.body.email, "CLE_SECRETE").toString();

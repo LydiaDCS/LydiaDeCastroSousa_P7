@@ -6,9 +6,6 @@ require('dotenv').config({ path: './config/.env'})
 //j'importe l'application express pour créer plus facile mon serveur
 const express = require('express');
 
-//Pour empêcher les attaques par injection de sélecteur de requête: nettoyer les données reçues
-const mongoSanitize = require('express-mongo-sanitize');
-
 //j'importe helmet -sécuriser entête http contre attaques XSS
 const helmet = require('helmet');
 
@@ -35,15 +32,12 @@ const limiter = rateLimit({
 //je crée mon app avec express
 const app = express();
 
-app.use(mongoSanitize());
-
 //permettre le chargement des images
 app.use(helmet({
     crossOriginResourcePolicy: false
 }));
 
 app.use(limiter);
-
 
 //j'importe mysql
 const mysql = require('mysql');
@@ -54,13 +48,13 @@ db.authenticate()
 .then(()=>console.log('Connexion à la base de données Mysql...'))
 .catch(err=> console.log('Error: '+ err))
 
-app.post('/users', function(req,res){
+/* app.post('/users', function(req,res){
     let user=req.body;
     let query = connection.query('INSERT INTO users set ?', user, function(err,result){
 
     });
     res.end('Success');
-});
+}); */
 
 
 //utilise pour analyser les corps json (comme bodyparser)

@@ -4,37 +4,33 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Button_log from '../components/Button_log';
 import {useForm} from 'react-hook-form';
+import { useState } from 'react';
 
 const Signup = () => {
-  const {register, handleSubmit, errors} = useForm();
-  const onSubmit = (form) => {
-    alert(`short input :${form.limitedLength}`);
-  };
-/* class Example extends React.Component{
-  constructor(){
-    super();
-    this.state ={user:{}};
-    this.onsubmit = this.handleSubmit.bind(this);
-  }
-  handleSubmit(e){
-    e.preventDefault();
-    let self =this;
-    fetch('/users',{
+  const {register, errors} = useForm();
+  const [user, setUser] =useState([]);
+ 
+    const handleSubmit=(e)=>{ 
+    /* //adresse modifier
+    fetch('http://localhost:3000/Signup',{
       method: 'POST',
       data:{
-        firstName:self.firstName,
-        lastName:self.lastName,
-        email: self.email,
-        password:self.password
+        firstName:this.firstName,
+        lastName:this.lastName,
+        email: this.email,
+        password:this.password
       }
     })
-    .then(function(response){
-      return response.json()
-    }).then(function(body){
-      console.log(body);
-    });
-  }
-} */
+    .then((res) => {
+      if (res.ok) {
+          return res.json();
+      }
+    })
+    .then((data) => {
+      let User = data.orderId;
+      window.location.assign("/forum");
+  }) */
+  } 
     return (
     <div>
       <Header/>
@@ -62,8 +58,8 @@ const Signup = () => {
       
       <p>Inscrivez-vous!</p>
 
-        <button type="submit">
-         <a class="buttoninfo" /* href="Forum" */ >
+        <button type="submit" onClick={handleSubmit}>
+         <a class="buttoninfo" href="Forum">
            S'inscrire
         </a> 
         </button>
@@ -73,7 +69,6 @@ const Signup = () => {
         <Footer/>
     </div>
   );
-};
-
+}
 
 export default Signup;
