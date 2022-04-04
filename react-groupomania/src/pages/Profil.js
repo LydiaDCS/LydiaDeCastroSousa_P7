@@ -1,20 +1,20 @@
 import React from 'react';
 import "../styles/Profil.css";
-import Header2 from '../components/Header2';
+import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Button_deconnect from '../components/Button_deconnect';
 import Button_forum from '../components/Button_forum';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-const Profil = () => {
-    
+class Profil extends React.Component{
+    render(){
     return ( <div >
-        <Header2/>
+        <Header/>
         <div className='container'>
             <div className='comptes'>
-                <a href=''>Administrateur</a>
-                <a href=''>Employé</a>  
+                <a href='/'>Administrateur</a>
+                <a href='/'>Employé</a>  
             </div>
             <section class="profil_container">
                 <h1> Informations </h1>
@@ -42,6 +42,7 @@ const Profil = () => {
         <Footer/>
         </div>
     );
+    }
 };
 
 export default Profil;

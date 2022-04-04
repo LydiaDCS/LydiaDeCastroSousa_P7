@@ -1,5 +1,7 @@
 import React from 'react';
 import "../styles/Header.css"
+import Button_deconnect from '../components/Button_deconnect';
+import Button_forum from '../components/Button_forum';
 
 
 const Header = () => {

@@ -7,7 +7,7 @@ li {
 }
 
 li:hover,
-i:hover {
+.i:hover {
     color: black;
 }
 
@@ -36,7 +36,7 @@ a {
     }
 }
 
-i {
+.i {
     color: #fa8072;
     font-size: 30px;
     margin: 15px;

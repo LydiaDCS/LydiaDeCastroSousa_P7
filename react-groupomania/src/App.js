@@ -4,6 +4,7 @@ import Forum from './pages/Forum';
 import Login from './pages/Login';
 import Profil from './pages/Profil';
 import Signup from './pages/Signup';
+import Message from './pages/Message';
 
 function App(){
     return (
@@ -14,6 +15,7 @@ function App(){
             <Route path="/Signup" element ={<Signup/>}/> 
             <Route path="/Forum" element ={<Forum/>}/>
             <Route path="/Profil" element ={<Profil/>}/>
+            <Route path="/Message" element ={<Message/>}/>
         </Routes>
         </BrowserRouter>
         );

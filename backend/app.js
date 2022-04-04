@@ -54,6 +54,14 @@ db.authenticate()
 .then(()=>console.log('Connexion à la base de données Mysql...'))
 .catch(err=> console.log('Error: '+ err))
 
+app.post('/users', function(req,res){
+    let user=req.body;
+    let query = connection.query('INSERT INTO users set ?', user, function(err,result){
+
+    });
+    res.end('Success');
+});
+
 
 //utilise pour analyser les corps json (comme bodyparser)
 app.use(express.json());

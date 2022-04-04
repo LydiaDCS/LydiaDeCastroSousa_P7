@@ -1,23 +1,22 @@
 import React from 'react';
-import "../styles/Forum.css"
+import "../styles/Forum.css";
 import Footer from '../components/Footer';
-import Profil from '../components/Profil'
-import Header2 from '../components/Header2';
+import Profil from '../components/Profil';
+import Header from '../components/Header';
 import Button_deconnect from '../components/Button_deconnect';
-import Button_forum from '../components/Button_forum';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Forum = () => {
     return ( <div >
-        <Header2/>
+        <Header/>
         <div className='page'>
             <nav className='nav'>
                 <ul className='nav_list'>
-                    <a href=''>
-                        <i class="far fa-comments"></i>
+                    <a href='/message'>
+                        <FontAwesomeIcon className='i' icon="fa-comments"/>
                     </a>
                     <Profil/>
                     <Button_deconnect/>
-                    <Button_forum/>
                 </ul>
         </nav>
         <section className='main'>

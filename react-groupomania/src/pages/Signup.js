@@ -1,5 +1,4 @@
-
-
+import React from 'react';
 import "../styles/Signup.css"
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -11,7 +10,31 @@ const Signup = () => {
   const onSubmit = (form) => {
     alert(`short input :${form.limitedLength}`);
   };
-
+/* class Example extends React.Component{
+  constructor(){
+    super();
+    this.state ={user:{}};
+    this.onsubmit = this.handleSubmit.bind(this);
+  }
+  handleSubmit(e){
+    e.preventDefault();
+    let self =this;
+    fetch('/users',{
+      method: 'POST',
+      data:{
+        firstName:self.firstName,
+        lastName:self.lastName,
+        email: self.email,
+        password:self.password
+      }
+    })
+    .then(function(response){
+      return response.json()
+    }).then(function(body){
+      console.log(body);
+    });
+  }
+} */
     return (
     <div>
       <Header/>

@@ -1,11 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Button_deconnect = () => {
   return (
     <div>
       <NavLink to ="/login">
-      <i class="fas fa-sign-out-alt"></i>
+      <FontAwesomeIcon className='i' icon="fas fa-sign-out-alt"/>
       </NavLink>
       
     </div>
