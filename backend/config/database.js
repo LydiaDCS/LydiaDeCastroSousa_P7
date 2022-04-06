@@ -1,4 +1,4 @@
-//j'importe sequelize - gestion de ma base de données
+/* //j'importe sequelize - gestion de ma base de données
 const sequelize = require('sequelize');
 module.exports = new sequelize('groupomania', 'root', 'lydiaDCS24!', {
     host:'localhost',
@@ -11,4 +11,4 @@ module.exports = new sequelize('groupomania', 'root', 'lydiaDCS24!', {
         acquire:30000,
         idle:10000
     },
-});
+}); */

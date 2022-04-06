@@ -32,6 +32,19 @@ const limiter = rateLimit({
 //je crée mon app avec express
 const app = express();
 
+//utilise pour analyser les corps json (comme bodyparser)
+app.use(express.json());
+
+
+//Gestion des erreurs CORS
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
+});
+
+
 //permettre le chargement des images
 app.use(helmet({
     crossOriginResourcePolicy: false
@@ -39,14 +52,15 @@ app.use(helmet({
 
 app.use(limiter);
 
-//j'importe mysql
+/* //j'importe mysql
 const mysql = require('mysql');
 
 const db = require('./config/database');
 
+
 db.authenticate()
 .then(()=>console.log('Connexion à la base de données Mysql...'))
-.catch(err=> console.log('Error: '+ err))
+.catch(err=> console.log('Error: '+ err)) */
 
 /* app.post('/users', function(req,res){
     let user=req.body;
@@ -56,17 +70,6 @@ db.authenticate()
     res.end('Success');
 }); */
 
-
-//utilise pour analyser les corps json (comme bodyparser)
-app.use(express.json());
-
-//Erreur CROS
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    next();
-});
 
 //j'enregistre les routes
 app.use('/forum', forumRoutes)

@@ -25,7 +25,7 @@
         "nodemon": "^2.0.15",
         "password-validator": "^5.2.1",
         "save": "^2.4.0",
-        "sequelize": "^6.17.0"
+        "sequelize": "^3.30.4"
     },
     "repository": {
         "type": "git",
