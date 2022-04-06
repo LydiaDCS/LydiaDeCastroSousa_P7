@@ -12,7 +12,7 @@ const Signup = (data) => {
     errors} = useForm();
 
     const sendRequest =(data) => {
-      fetch(`http://localhost:3000/auth/Signup`,{
+      fetch(`http://localhost:3000/auth/signup`,{
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -33,7 +33,7 @@ const Signup = (data) => {
       })
       .then((data) => {
         let user = data;
-        /* window.location.assign("/login"); */
+        /*  window.location.assign("/login"); */
       })
       .catch((err) => {
         console.log(err);
@@ -46,7 +46,7 @@ const Signup = (data) => {
         <div className='log'>
         <Button_log/>
         </div>
-        <form className='form' onSubmit={handleSubmit((user)=> sendRequest(user))}>
+        <form className='form' onSubmit={handleSubmit((data)=> sendRequest(data))}>
         <label for="firstName">Prénom :</label>
         <input {...register ("firstName", {required : 'Ce champ est obligatoire'})} type="text" placeholder="Prénom" 
         />
@@ -65,7 +65,7 @@ const Signup = (data) => {
       
       <p>Inscrivez-vous!</p>
 
-        <button type="submit" /* onClick={()=> handleSubmit(data)} */>
+        <button type="submit" onClick={()=> handleSubmit(data)} >
            S'inscrire 
         </button>
         </form> 

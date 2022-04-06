@@ -13,28 +13,68 @@ const User = require('../models/user');
 //enregistrement de nouveaux utilisateurs -- middleware avec fonction signup
 exports.signup = (req, res, next) => {
     console.log(req.body);
+    
+    //je récupère toutes mes infos
+    let email = req.body.email;
+    let lastName= req.body.lastname;
+    let firstName = req.body.firstName;
+    let password = req.body.password;
 
-    //chiffrer l'email dans la base de donnée 
-    const emailCryptoJs = cryptojs.HmacSHA512(req.body.email, "CLE_SECRETE").toString();
-
-    //je crypte le mot de passe avec hash, 10 tours
-    bcrypt.hash(req.body.password, 10)
-        //je recupère le hash, l'enregistre dans un nouvel utilisateur et j'enregistre le hash en mot de passe
-        .then(hash => {
-            const user = new User({
+//je vérifie qu'il n'existe pas déjà ce user dans la bdd
+User.findOne({
+    attributes:['email'],
+    where:{email:email}
+})
+    .then(function(User) {
+    //je vérifie si utilisateur existe ou non
+    //s'il n'existe pas
+        if (!User) {
+        //chiffrer l'email dans la base de donnée 
+        const emailCryptoJs = cryptojs.HmacSHA512(req.body.email, "CLE_SECRETE").toString();
+        //je crypte le mot de passe avec hash, 10 tours
+        bcrypt.hash(password, 10, function(err, bcryptdPassword){
+            //je crée mon nouveau user
+            const newUser = User.create({
                 email: emailCryptoJs,
-                password: hash
+                lastName:lastName,
+                firstName:firstName,
+                password: bcryptdPassword,
+                isAdmin:0
+            })
+            //je retourne identifiant du nouveau user
+            .then(function(newUser) {
+                return res.status(201).json({ 
+                    'userid':newUser._id 
+                })
+            })
+            .catch(function(err){
+                return res.status(500).json({'error':'Utilisateur ne peut pas être trouvé'});
             });
-            //j'enregistre le user dans la base de données
-            user.save()
-                .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-                .catch(error => res.status(400).json({ error }));
-        })
-        .catch(error => res.status(500).json({ error }));
+        });
+        }
+        //s'il existe
+        else{
+            return res.status(409).json ({'error':'Utilisateur existant'});
+        }
+    })
+    .catch(function(err){
+        return res.status(500).json ({error});
+    });
+
 };
 
 //Connexion d'utilisateur existant -- middleware avec fonction login
 exports.login = (req, res, next) => {
+
+    
+    //je récupère les paramètres de connexion
+    let email = req.body.email;
+    let password = req.body.password;
+
+    //je vérifie si les champs si rempli
+    if (email == null || password == null){
+        return res.status(400).json({'error':'certains champs sont vides'});
+    }
 
     //chiffrer l'email dans la base de donnée 
     const emailCryptoJs = cryptojs.HmacSHA512(req.body.email, "CLE_SECRETE").toString();
@@ -42,28 +82,32 @@ exports.login = (req, res, next) => {
     //Je récupère l'utilisateur de la base de données
     User.findOne({ email: emailCryptoJs })
         .then(user => {
-            //si email pas bon = pas de user
-            if (!user) {
-                //non autorisé
-                return res.status(401).json({ error: 'Utilisateur non trouvé !' });
-            }
+            //si l'utilisateur existe par rapport à son email
+            if (user) {
 
             //si user, on compare le mot de passe envoyer par l'utilisateur qui veut se connecter avec le hash du user dans la base de données
             bcrypt.compare(req.body.password, user.password)
-                .then(valid => {
-                    //si comparaison pas bonne
-                    if (!valid) {
-                        return res.status(401).json({ error: 'Mot de passe incorrect !' });
-                    }
-                    //si comparaison est bonne, j'utilise la fonction sign pour encoder un nouveau token qui contient un payload (données encodées dans le token) grâce à une clé secrète temporaire, config expiration)
-                    res.status(200).json({
-                        userId: user._id,
-                        token: jwt.sign({ userId: user._id },
-                            'RANDOM_TOKEN_SECRET', { expiresIn: '24h' }
-                        )
-                    });
-                })
-                .catch(error => res.status(500).json({ error }));
+            .then(valid => {
+            //si comparaison pas bonne
+                if (!valid) {
+                    return res.status(401).json({ error: 'Mot de passe incorrect !' });
+                }
+                 //si comparaison est bonne, j'utilise la fonction sign pour encoder un nouveau token qui contient un payload (données encodées dans le token) grâce à une clé secrète temporaire, config expiration)
+                res.status(200).json({
+                    userId: user._id,
+                    token: jwt.sign({ userId: user._id, isAdmin:user._isAdmin },
+                    'RANDOM_TOKEN_SECRET', { expiresIn: '24h' }
+                    )
+                });
+            })
+            .catch(error => res.status(500).json({ error }));
+
+            }
+            //s'il n'existe pas
+            else{
+                //non autorisé
+                return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+            } 
         })
         .catch(error => res.status(500).json({ error }));
 };

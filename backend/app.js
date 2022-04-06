@@ -35,7 +35,6 @@ const app = express();
 //utilise pour analyser les corps json (comme bodyparser)
 app.use(express.json());
 
-
 //Gestion des erreurs CORS
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -52,23 +51,14 @@ app.use(helmet({
 
 app.use(limiter);
 
-/* //j'importe mysql
+//j'importe mysql
 const mysql = require('mysql');
 
-const db = require('./config/database');
+const database = require('./config/database');
 
-
-db.authenticate()
+database.authenticate()
 .then(()=>console.log('Connexion à la base de données Mysql...'))
-.catch(err=> console.log('Error: '+ err)) */
-
-/* app.post('/users', function(req,res){
-    let user=req.body;
-    let query = connection.query('INSERT INTO users set ?', user, function(err,result){
-
-    });
-    res.end('Success');
-}); */
+.catch(err=> console.log('Error: '+ err)) 
 
 
 //j'enregistre les routes

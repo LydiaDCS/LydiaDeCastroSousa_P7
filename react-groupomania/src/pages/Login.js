@@ -7,11 +7,11 @@ import {useForm} from 'react-hook-form';
 
 
 
-const Login = () => {
+const Login = (data) => {
     const {register, handleSubmit, formState:{errors}} = useForm();
     
     const sendRequest =(data) => {
-        fetch(`http://localhost:3000/auth`,{
+        fetch(`http://localhost:3000/auth/login`,{
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -49,8 +49,8 @@ const Login = () => {
             <p className='msgerror'>{errors.password?.message}</p>
              
       <p>Connectez-vous!</p> 
-         <button type="submit">
-         <a class="buttoninfo" /* href="Forum" */>Connexion</a> 
+         <button type="submit" onClick={()=> handleSubmit(data)}>
+         Connexion
          </button>  
           <div className='redirection'>
               <hr/>

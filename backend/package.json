@@ -35,5 +35,9 @@
         "url": "https://github.com/LydiaDCS/LydiaDeCastroSousa_P7/issues"
     },
     "homepage": "https://github.com/LydiaDCS/LydiaDeCastroSousa_P7#readme",
-    "description": ""
+    "description": "",
+    "devDependencies": {
+        "@types/bcrypt": "^5.0.0",
+        "@types/crypto-js": "^4.1.1"
+    }
 }
