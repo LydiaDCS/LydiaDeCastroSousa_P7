@@ -4,17 +4,25 @@ body {
 
 .page {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto;
     grid-template-rows: 1fr;
     column-gap: 3rem;
 }
 
 .main {
+    display: flex;
+    flex-direction: column;
     margin-left: 30%;
-    border: 3px solid rgb(135, 206, 238);
-    background-color: rgb(135, 206, 238);
     border-radius: 20px;
     padding: 20px;
+}
+
+form,
+article {
+    border: 3px solid rgb(135, 206, 238);
+    background-color: rgb(135, 206, 238);
+    padding: 15px;
+    border-radius: 20px;
 }
 
 .lien_profil {

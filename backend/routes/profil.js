@@ -8,10 +8,8 @@ const multer = require('../middleware/multer-config');
 
 const profilCtrl = require('../controllers/profil');
 
-router.get('/', auth, profilCtrl.getAllStuff);
-router.post('/', auth, multer, profilCtrl.createThing);
-router.get('/:id',auth, profilCtrl.getOneThing);
-router.put('/:id', auth, multer, profilCtrl.modifyThing);
-router.delete('/:id',auth, profilCtrl.deleteThing);
+router.get('/:id',auth, profilCtrl.getOneUser);
+router.put('/:id', auth, multer, profilCtrl.modifyUser);
+router.delete('/:id',auth, profilCtrl.deleteUser);
 
 module.exports = router;

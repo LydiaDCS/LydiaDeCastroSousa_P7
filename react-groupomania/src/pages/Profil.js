@@ -19,12 +19,21 @@ const Profil = () => {
             <section class="profil_container">
                 <h1> Informations </h1>
             <div className='profil'>
-            <FontAwesomeIcon className='icon' icon="fa-solid fa-user" />
-            <div class="info">
-                <p>Nom :</p>
-                <br/>
-                <p>Prénom :</p>
-                <br/>
+                <div>
+                <input accept="image/*" type="file"/>
+            <img alt="profil" class="profil-picture" src=""/>
+            <label for="text-post"></label>
+                </div>
+            
+            <div className="info">
+                <div className='form-group'>
+                <label for="name">Nom :</label>
+                <input formcontrolname="name" id="name" type="text"/>
+                </div>
+                <div className='form-group'>
+                <label for="name">Prénom :</label>
+                <input formcontrolname="prénom" id="prénom" type="text"/>
+                </div>
             </div>
             </div>
             </section>

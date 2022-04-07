@@ -1,13 +1,19 @@
+const Message = require('../models/message');
 
-
-exports.createThing = (req, res, next) => {
-    const thing = new Thing({
+exports.createMessage = (req, res, next) => {
+    const message = new Message({
         title: req.body.title,
-        description: req.body.description,
-        imageUrl: req.body.imageUrl,
-        userId: req.body.userId
+        content:req.body.content,
     });
-    thing.save().then(
+
+    if(title ==null || content==null){
+        return res.status(400).jon({'error':'missing parameters'});
+    }
+    User.findOne({
+        where:{id:userId}
+    })
+    message.save()
+    .then(
         () => {
             res.status(201).json({
                 message: 'Post saved successfully!'
@@ -22,7 +28,21 @@ exports.createThing = (req, res, next) => {
     );
 };
 
-exports.getOneThing = (req, res, next) => {
+exports.getAllMessage = (req, res, next) => {
+    Message.find().then(
+        (messages) => {
+            res.status(200).json(messages);
+        }
+    ).catch(
+        (error) => {
+            res.status(400).json({
+                error: error
+            });
+        }
+    );
+};
+
+exports.getOneMessage = (req, res, next) => {
     Thing.findOne({
         _id: req.params.id
     }).then(
@@ -38,7 +58,7 @@ exports.getOneThing = (req, res, next) => {
     );
 };
 
-exports.modifyThing = (req, res, next) => {
+exports.modifyMessage = (req, res, next) => {
     const thing = new Thing({
         _id: req.params.id,
         title: req.body.title,
@@ -62,7 +82,7 @@ exports.modifyThing = (req, res, next) => {
     );
 };
 
-exports.deleteThing = (req, res, next) => {
+exports.deleteMessage = (req, res, next) => {
     Thing.deleteOne({ _id: req.params.id }).then(
         () => {
             res.status(200).json({
@@ -78,21 +98,9 @@ exports.deleteThing = (req, res, next) => {
     );
 };
 
-exports.getAllStuff = (req, res, next) => {
-    Thing.find().then(
-        (things) => {
-            res.status(200).json(things);
-        }
-    ).catch(
-        (error) => {
-            res.status(400).json({
-                error: error
-            });
-        }
-    );
-};
+
 //-------------------------------------- export du middleware/fonction likeSauce----------------------------------------
-exports.likeSauce = (req, res, next) => {
+exports.likeMessage = (req, res, next) => {
     // récupère le champs likes
     const likeStatus = req.body.like;
     // récupère l'id sauce du paramètre de la requête (de l'url)
@@ -152,4 +160,18 @@ exports.likeSauce = (req, res, next) => {
                 .catch(() => res.status(404).json({ message: "Sauce introuvable !" }));
             break;
     }
+};
+
+exports.commentMessage = (req, res, next) => {
+    Message.find().then(
+        (message) => {
+            res.status(200).json(messages);
+        }
+    ).catch(
+        (error) => {
+            res.status(400).json({
+                error: error
+            });
+        }
+    );
 };

@@ -10,11 +10,67 @@ const Forum = () => {
     return ( <div >
         <Header/>
         <div className='page'>
-            
         <section className='main'>
-        <h1 > Forum </h1> <br/>
-        <p > Lorem ipsum, dolor sit amet consectetur adipisicing elit.Architecto enim provident quaerat est sapiente officia aperiam corrupti, perspiciatis molestiae iusto illo nam recusandae, velit, eos rerum exercitationem odio dolore explicabo optio et doloribus ? Odio debitis illo iure, ad, a earum eius unde porro deserunt nobis officiis repudiandae voluptatibus iusto ? Fugit eaque labore recusandae doloremque ut voluptatibus, ad quisquam velit, esse voluptates a numquam necessitatibus, voluptatum itaque dolor sit accusantium impedit error hic atque quidem sequi!Magni ut autem, unde, obcaecati assumenda molestias quos in , perspiciatis consequatur mollitia voluptas!Facere corporis magni qui veniam maxime modi eaque, accusamus optio eligendi ad ? </p> <br/>
-        <p > Lorem ipsum dolor sit, amet consectetur adipisicing elit.Facilis voluptatum beatae veniam aliquid nesciunt dicta amet eos soluta atque sint numquam est temporibus iure impedit, distinctio quaerat cumque ipsum unde consequuntur esse, sequi voluptates molestiae vitae!Laborum sequi aut perspiciatis quo fuga magni explicabo alias cumque eveniet soluta iusto minima enim ratione sunt, quasi incidunt fugit unde aperiam porro.Itaque sint tempore ipsam deleniti quidem voluptate nesciunt.Expedita earum consequuntur et non ullam, aliquam porro enim asperiores quae eaque veniam praesentium possimus voluptatibus corrupti rem ut!Delectus facilis placeat necessitatibus cupiditate ea fugiat dolorum sunt nulla et.Libero incidunt quae ab ducimus vel et, quos, dolorem minus voluptatem quam, consequatur aliquam atque tempora harum sit esse optio cupiditate nisi non voluptates ? Inventore asperiores sunt itaque autem similique!Exercitationem ullam enim omnis recusandae fuga quod natus voluptate asperiores eos perspiciatis ? Ipsa cupiditate temporibus deserunt corporis harum est architecto earum perspiciatis tempora hic mollitia officiis saepe qui porro delectus minus maxime praesentium ipsum facere laudantium, debitis repellendus.Repellendus ex mollitia eligendi sunt aperiam architecto, accusamus iste vitae placeat non commodi!Modi autem expedita mollitia tenetur ea perspiciatis voluptate, recusandae sunt, fugiat id reprehenderit illo harum impedit officia provident iusto.Quod, temporibus ullam. </p> 
+        <h1 > Bienvenue sur Groupomania </h1> <br/>
+        <div class="poster">
+        <form>
+            <div class="poster-header">
+            <img alt="profil" class="profil-picture" src=""/>
+            <label for="text-post"></label>
+            <input type="text" name="text-post" class="text-post" id="text-post" placeholder="Exprimez-vous"></input>
+            </div>
+            <div class="poster-footer">
+                <label for="file-input-poster">
+                   
+                    <p>Importez une image</p>
+                </label>
+                <input type="file" id="file-input-poster" name="image" accept="images/*"/>
+            </div>
+<button type="submit" id="submit-post"> Envoyer</button>
+        </form>
+        </div>
+        <br/>
+        <article className='post data'>
+            <div className='post-header'>
+                <a className='profile-link' href=""></a>
+                <div className='post-header-picture'>
+                    <image src="" alt="portrait de l'auteur de la publication" className='profile-picture'/>
+                    <div className='more-data'>
+                        <p className='author'></p>
+                        <p className='date'></p>
+                    </div>
+                </div>
+            </div>
+            <div className='post-body'>
+                <div className='body'>
+                    <p className='post-message'> Test message</p>
+                </div>
+            </div>
+            <div className='post-footer'>
+                <div className='like-comment'>
+                    <div className='like-container'>
+                    <p className='like-count'></p>
+                    </div>
+                    <div className='comment-container'>
+                        <p className='comment-count'></p>
+                    </div>
+                </div>
+                <hr></hr>
+                <div className='comment-section'>
+                    <div className='comment'>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </article>
+        <br/>
+        <article className='post data'>
+            
+        </article>
+
         </section>
         <nav className='nav'>
                 <ul className='nav_list'>

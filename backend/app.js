@@ -62,9 +62,9 @@ database.authenticate()
 
 
 //j'enregistre les routes
-app.use('/forum', forumRoutes)
-app.use('/profil', profilRoutes); 
-app.use('/auth', userRoutes);
+app.use('/api/forum', forumRoutes)
+app.use('/api/profil', profilRoutes); 
+app.use('/api/user', userRoutes);
 
 
 //middleware pour servir dossier images

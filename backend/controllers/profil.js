@@ -1,33 +1,11 @@
 
-exports.createThing = (req, res, next) => {
-    const thing = new Thing({
-        title: req.body.title,
-        description: req.body.description,
-        imageUrl: req.body.imageUrl,
-        price: req.body.price,
-        userId: req.body.userId
-    });
-    thing.save().then(
-        () => {
-            res.status(201).json({
-                message: 'Post saved successfully!'
-            });
-        }
-    ).catch(
-        (error) => {
-            res.status(400).json({
-                error: error
-            });
-        }
-    );
-};
-
-exports.getOneThing = (req, res, next) => {
-    Thing.findOne({
+//je récupère les infos de mon user 
+exports.getOneUser = (req, res, next) => {
+    User.findOne({
         _id: req.params.id
     }).then(
-        (thing) => {
-            res.status(200).json(thing);
+        (User) => {
+            res.status(200).json(User);
         }
     ).catch(
         (error) => {
@@ -38,19 +16,19 @@ exports.getOneThing = (req, res, next) => {
     );
 };
 
-exports.modifyThing = (req, res, next) => {
-    const thing = new Thing({
+exports.modifyUser = (req, res, next) => {
+    const user = new User({
         _id: req.params.id,
-        title: req.body.title,
-        description: req.body.description,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
         imageUrl: req.body.imageUrl,
-        price: req.body.price,
         userId: req.body.userId
     });
-    Thing.updateOne({ _id: req.params.id }, thing).then(
+    User.updateOne({ _id: req.params.id }, user)
+    .then(
         () => {
             res.status(201).json({
-                message: 'Thing updated successfully!'
+                message: 'User updated successfully!'
             });
         }
     ).catch(
@@ -62,26 +40,13 @@ exports.modifyThing = (req, res, next) => {
     );
 };
 
-exports.deleteThing = (req, res, next) => {
-    Thing.deleteOne({ _id: req.params.id }).then(
+exports.deleteUser = (req, res, next) => {
+    User.deleteOne({ _id: req.params.id })
+    .then(
         () => {
             res.status(200).json({
                 message: 'Deleted!'
             });
-        }
-    ).catch(
-        (error) => {
-            res.status(400).json({
-                error: error
-            });
-        }
-    );
-};
-
-exports.getAllStuff = (req, res, next) => {
-    Thing.find().then(
-        (things) => {
-            res.status(200).json(things);
         }
     ).catch(
         (error) => {
