@@ -12,7 +12,7 @@ const User = require('../models/user');
 
 //enregistrement de nouveaux utilisateurs -- middleware avec fonction signup
 exports.signup = (req, res, next) => {
-    console.log(req.body);
+    console.log(req.body);   
     
     //je récupère toutes mes infos
     let email = req.body.email;

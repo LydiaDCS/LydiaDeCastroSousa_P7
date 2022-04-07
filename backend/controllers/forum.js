@@ -2,8 +2,11 @@ const Message = require('../models/message');
 
 exports.createMessage = (req, res, next) => {
     const message = new Message({
+        _id: req.params.id,
         title: req.body.title,
         content:req.body.content,
+        imageUrl: req.body.imageUrl,
+        userId: req.body.userId
     });
 
     if(title ==null || content==null){
@@ -43,11 +46,11 @@ exports.getAllMessage = (req, res, next) => {
 };
 
 exports.getOneMessage = (req, res, next) => {
-    Thing.findOne({
+    Message.findOne({
         _id: req.params.id
     }).then(
-        (thing) => {
-            res.status(200).json(thing);
+        (message) => {
+            res.status(200).json(message);
         }
     ).catch(
         (error) => {
@@ -59,15 +62,14 @@ exports.getOneMessage = (req, res, next) => {
 };
 
 exports.modifyMessage = (req, res, next) => {
-    const thing = new Thing({
+    const Message = new Message({
         _id: req.params.id,
         title: req.body.title,
-        description: req.body.description,
+        content: req.body.content,
         imageUrl: req.body.imageUrl,
-        price: req.body.price,
         userId: req.body.userId
     });
-    Thing.updateOne({ _id: req.params.id }, thing).then(
+    Message.updateOne({ _id: req.params.id }, message).then(
         () => {
             res.status(201).json({
                 message: 'Thing updated successfully!'
@@ -83,7 +85,7 @@ exports.modifyMessage = (req, res, next) => {
 };
 
 exports.deleteMessage = (req, res, next) => {
-    Thing.deleteOne({ _id: req.params.id }).then(
+    Message.deleteOne({ _id: req.params.id }).then(
         () => {
             res.status(200).json({
                 message: 'Deleted!'

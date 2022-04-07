@@ -5,14 +5,12 @@ import Footer from '../components/Footer';
 import Button_log from '../components/Button_log';
 import {useForm} from 'react-hook-form';
 
-
 const Signup = (data) => {
   const {register, 
-    handleSubmit,
-    errors} = useForm();
+    handleSubmit} = useForm();
 
     const sendRequest =(data) => {
-      fetch(`http://localhost:3000/auth/signup`,{
+      fetch(`http://localhost:3000/api/user/signup`,{
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -33,7 +31,8 @@ const Signup = (data) => {
       })
       .then((data) => {
         let user = data;
-        /*  window.location.assign("/login"); */
+        console.log(data);
+        /* window.location.assign("/login"); */
       })
       .catch((err) => {
         console.log(err);
@@ -46,25 +45,25 @@ const Signup = (data) => {
         <div className='log'>
         <Button_log/>
         </div>
-        <form className='form' onSubmit={handleSubmit((data)=> sendRequest(data))}>
-        <label for="firstName">Prénom :</label>
-        <input {...register ("firstName", {required : 'Ce champ est obligatoire'})} type="text" placeholder="Prénom" 
+        <form className='form' onSubmit={handleSubmit((user)=> sendRequest(user))}>
+        <label htmlFor="firstName">Prénom :</label>
+        <input {...register ("firstName", {required : 'Ce champ est obligatoire'})} type="text" placeholder="Prénom" autoComplete='off' 
         />
         
-        <label for="lastName">Nom :</label>
-        <input type="text" {...register ("lastName", {required : 'Ce champ est obligatoire', minlengh:2})} placeholder="Nom" 
+        <label htmlFor="lastName">Nom :</label>
+        <input type="text" {...register ("lastName", {required : 'Ce champ est obligatoire', minlengh:2})} placeholder="Nom" autoComplete='off'
         />
 
-        <label for="email">Email :</label>
-        <input type="email" {...register ("email", {required:'Veuillez entrer une adresse mail valide', pattern: /^[a-zA-Zéèàïç0-9.!^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/g})} placeholder="Email" 
+        <label htmlFor="email">Email :</label>
+        <input type="email" {...register ("email", {required:'Veuillez entrer une adresse mail valide', pattern: /^[a-zA-Zéèàïç0-9.!^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/g})} placeholder="Email" autoComplete='off'
         />
 
-        <label for="password">Mot de passe :</label>
-        <input type="text" {...register ("password", {required:'Mot de passe incorrect' })} placeholder="Password" 
+        <label htmlFor="password">Mot de passe :</label>
+        <input type="password" {...register ("password", {required:'Mot de passe incorrect' })} placeholder="Password" autoComplete='off'
         />
       
       <p>Inscrivez-vous!</p>
-
+      
         <button type="submit" onClick={()=> handleSubmit(data)} >
            S'inscrire 
         </button>

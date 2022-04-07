@@ -2,9 +2,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 // import your icons
-import { faComments, faHome, faSignOutAlt, faUserEdit } from "@fortawesome/free-solid-svg-icons";
-import {faUser} from "@fortawesome/free-solid-svg-icons";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faComments, faHome, faSignOutAlt, faUserEdit, faUser, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
 
 library.add(
   faHome,
@@ -12,7 +10,8 @@ library.add(
   faRightFromBracket,
   faSignOutAlt,
   faUserEdit,
-  faComments
+  faComments,
+  faUser
   
   // more icons go here
 );

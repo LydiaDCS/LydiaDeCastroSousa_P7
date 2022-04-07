@@ -5,13 +5,11 @@ import Footer from '../components/Footer';
 import Button_sign from '../components/Button_sign';
 import {useForm} from 'react-hook-form';
 
-
-
 const Login = (data) => {
     const {register, handleSubmit, formState:{errors}} = useForm();
     
     const sendRequest =(data) => {
-        fetch(`http://localhost:3000/auth/login`,{
+        fetch(`http://localhost:3000/api/user/login`,{
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -30,7 +28,7 @@ const Login = (data) => {
         })
         .then((data) => {
           let user = data;
-         /*  window.location.assign("/forum"); */
+          window.location.assign("/forum");
         })
         .catch((err) => {
           console.log(err);
@@ -41,11 +39,11 @@ const Login = (data) => {
         <Header/>
         <div>
         <form className='form' onSubmit={handleSubmit((data)=> sendRequest(data))}>
-            <label for="email">Email :</label>
+            <label htmlFor="email">Email :</label>
             <input {...register ("email", {required:'Veuillez entrer une adresse mail valide', pattern: /^[a-zA-Zéèàïç0-9.!^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/g})}  type="email" placeholder="Email" />
             <p className='msgerror'>{errors.email?.message}</p>
-            <label for="password">Mot de passe:</label>
-            <input {...register ("password", {required:'Mot de passe incorrect', minlengh:4 })}type="text" placeholder="Password"/>
+            <label htmlFor="password">Mot de passe:</label>
+            <input {...register ("password", {required:'Mot de passe incorrect', minlengh:4 })}type="password" placeholder="Password"/>
             <p className='msgerror'>{errors.password?.message}</p>
              
       <p>Connectez-vous!</p> 

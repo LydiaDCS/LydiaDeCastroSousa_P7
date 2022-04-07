@@ -4,7 +4,6 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Button_deconnect from '../components/Button_deconnect';
 import Button_forum from '../components/Button_forum';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 const Profil = () => {
@@ -19,11 +18,12 @@ const Profil = () => {
             <section class="profil_container">
                 <h1> Informations </h1>
             <div className='profil'>
-                <div>
-                <input accept="image/*" type="file"/>
-            <img alt="profil" class="profil-picture" src=""/>
+            <div className='profil-image'> 
+            <img alt="profil" class="profil-picture" src="images/male-icon-vector-user-person-profile-avatar-in-flat-color-glyph-pictogram-illustration-400-163243023.jpg"
+            />
+            <input accept="image/jpg image/png image/gif" type="file" className='addimages'/>
+            </div> 
             <label for="text-post"></label>
-                </div>
             
             <div className="info">
                 <div className='form-group'>
