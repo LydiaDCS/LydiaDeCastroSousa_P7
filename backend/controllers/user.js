@@ -12,56 +12,29 @@ const User = require('../models/user');
 
 //enregistrement de nouveaux utilisateurs -- middleware avec fonction signup
 exports.signup = (req, res, next) => {
-    console.log(req.body);   
-    
-    //je récupère toutes mes infos
-    let email = req.body.email;
-    let lastName= req.body.lastname;
-    let firstName = req.body.firstName;
-    let password = req.body.password;
 
-//je vérifie qu'il n'existe pas déjà ce user dans la bdd
-User.findOne({
-    attributes:['email'],
-    where:{email:email}
-})
-    .then(function(User) {
-    //je vérifie si utilisateur existe ou non
-    //s'il n'existe pas
-        if (!User) {
-        //chiffrer l'email dans la base de donnée 
-        const emailCryptoJs = cryptojs.HmacSHA512(req.body.email, "CLE_SECRETE").toString();
-        //je crypte le mot de passe avec hash, 10 tours
-        bcrypt.hash(password, 10, function(err, bcryptdPassword){
-            //je crée mon nouveau user
-            const newUser = User.create({
+    //chiffrer l'email dans la base de donnée 
+    const emailCryptoJs = cryptojs.HmacSHA512(req.body.email, "CLE_SECRETE").toString();
+
+    //je crypte le mot de passe avec hash, 10 tours
+    bcrypt.hash(req.body.password, 10)
+        //je recupère le hash, l'enregistre dans un nouvel utilisateur et j'enregistre le hash en mot de passe
+        .then(hash => {
+            const user = new User({
                 email: emailCryptoJs,
+                password: hash,
                 lastName:lastName,
                 firstName:firstName,
-                password: bcryptdPassword,
                 isAdmin:0
-            })
-            //je retourne identifiant du nouveau user
-            .then(function(newUser) {
-                return res.status(201).json({ 
-                    'userid':newUser._id 
-                })
-            })
-            .catch(function(err){
-                return res.status(500).json({'error':'Utilisateur ne peut pas être trouvé'});
             });
-        });
-        }
-        //s'il existe
-        else{
-            return res.status(409).json ({'error':'Utilisateur existant'});
-        }
-    })
-    .catch(function(err){
-        return res.status(500).json ({error});
-    });
-
+            //j'enregistre le user dans la base de données
+            user.save()
+                .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+                .catch(error => res.status(400).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
 };
+
 
 //Connexion d'utilisateur existant -- middleware avec fonction login
 exports.login = (req, res, next) => {
