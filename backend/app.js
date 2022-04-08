@@ -31,6 +31,7 @@ const limiter = rateLimit({
 
 //je crée mon app avec express
 const app = express();
+const bodyparser = require("body-parser");
 
 //utilise pour analyser les corps json (comme bodyparser)
 app.use(express.json());
@@ -55,6 +56,8 @@ app.use(limiter);
 const mysql = require('mysql');
 
 const database = require('./config/database');
+
+const db = require("./models");
 
 database.authenticate()
 .then(()=>console.log('Connexion à la base de données Mysql...'))

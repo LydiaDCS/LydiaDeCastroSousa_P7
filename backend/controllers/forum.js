@@ -9,7 +9,7 @@ exports.createMessage = (req, res, next) => {
         userId: req.body.userId
     });
 
-    if(title ==null || content==null){
+    if(title == null || content == null){
         return res.status(400).jon({'error':'missing parameters'});
     }
     User.findOne({

@@ -7,7 +7,7 @@
     margin-bottom: 10px;
     background-color: rgb(135, 206, 238);
     padding: 20px 50px 50px 50px;
-    margin: 0px 35% 0px 35%;
+    margin: 0px 30% 0px 30%;
     border-radius: 20px 20px 20px 20px;
 }
 
@@ -19,7 +19,7 @@
 
 @media screen and (min-width: 700px) and (max-width: 1100px) {
     .form {
-        margin: 0px 22% 0px 22%;
+        margin: 0px 10% 0px 10%;
     }
 }
 

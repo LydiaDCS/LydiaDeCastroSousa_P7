@@ -7,7 +7,18 @@ import Button_forum from '../components/Button_forum';
 
 
 const Profil = () => {
-    
+    async function fetchApi() {
+        await fetch("http://localhost:3000/api/profil/:id")
+            .then((res) => res.json())
+            .then((data) => {
+            console.log(data)})
+            .catch((err)=>{
+                console.log(err);
+            })
+    }
+    function deleteProfile(){
+
+    }
     return ( <div >
         <Header/>
         <div className='container'>
@@ -37,7 +48,7 @@ const Profil = () => {
             </div>
             </div>
             </section>
-            <button className="deletebutton">Supprimer</button>
+            <button className="deletebutton" onClick={deleteProfile()}>Supprimer</button>
             <button className="modifybutton">Modifier</button>
             <div className='buttons'>
             <Button_forum/>
