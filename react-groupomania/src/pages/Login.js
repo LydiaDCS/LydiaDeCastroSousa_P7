@@ -8,26 +8,29 @@ import {useForm} from 'react-hook-form';
 const Login = (data) => {
     const {register, handleSubmit, formState:{errors}} = useForm();
     
-    const sendRequest =(data) => {
+    const sendRequest = ({email, password}) => {
         fetch(`http://localhost:3000/api/user/login`,{
           method: 'POST',
           headers: {
+            'Authorization': 'bearer',
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          data : {
-            email: data.email,
-            password:data.password,
-          },
-          body: JSON.stringify(data) 
+          body: JSON.stringify({
+            email,
+            password,
+          }) 
         })
         .then((res) => {
           if (res.ok) {
               return res.json();
           }
         })
-        .then((data) => {
-          let user = data;
+        .then((user) => {
+          user = {
+            email:"user.email",
+            password:"user.password"
+          }
           window.location.assign("/forum");
         })
         .catch((err) => {
@@ -38,7 +41,7 @@ const Login = (data) => {
     return ( < div>
         <Header/>
         <div>
-        <form className='form' onSubmit={handleSubmit((data)=> sendRequest(data))}>
+        <form className='form' onSubmit={handleSubmit((sendRequest))}>
             <label htmlFor="email">Email :</label>
             <input {...register ("email", {required:'Veuillez entrer une adresse mail valide', pattern: /^[a-zA-Zéèàïç0-9.!^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/g})}  type="email" placeholder="Email" />
             <p className='msgerror'>{errors.email?.message}</p>
@@ -47,7 +50,7 @@ const Login = (data) => {
             <p className='msgerror'>{errors.password?.message}</p>
              
       <p>Connectez-vous!</p> 
-         <button type="submit" onClick={()=> handleSubmit(data)}>
+         <button type="submit">
          Connexion
          </button>  
           <div className='redirection'>
