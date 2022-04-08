@@ -8,37 +8,63 @@ const cryptojs = require('crypto-js');
 const jwt = require('jsonwebtoken');
 
 //j'importe le model User
-const User = require('../models/user');
+const { User } = require("../models");
 
 //enregistrement de nouveaux utilisateurs -- middleware avec fonction signup
 exports.signup = (req, res, next) => {
+  console.log(req.body);
 
-    //chiffrer l'email dans la base de donnée 
-    const emailCryptoJs = cryptojs.HmacSHA512(req.body.email, "CLE_SECRETE").toString();
+  //je récupère toutes mes infos
+  let email = req.body.email;
+  let lastName = req.body.lastName;
+  let firstName = req.body.firstName;
+  let password = req.body.password;
+  const emailCryptoJs = cryptojs.HmacSHA512(email, "CLE_SECRETE").toString();
 
-    //je crypte le mot de passe avec hash, 10 tours
-    bcrypt.hash(req.body.password, 10)
-        //je recupère le hash, l'enregistre dans un nouvel utilisateur et j'enregistre le hash en mot de passe
-        .then(hash => {
-            const user = new User({
-                email: emailCryptoJs,
-                password: hash,
-                lastName:lastName,
-                firstName:firstName,
-                isAdmin:0
+  //je vérifie qu'il n'existe pas déjà ce user dans la bdd
+  User.findOne({ where: { email: emailCryptoJs } })
+    .then(function (user) {
+      console.log(user);
+      //je vérifie si utilisateur existe ou non
+      //s'il n'existe pas
+      if (!user) {
+        //chiffrer l'email dans la base de donnée
+        const emailCryptoJs = cryptojs
+          .HmacSHA512(req.body.email, "CLE_SECRETE")
+          .toString();
+        //je crypte le mot de passe avec hash, 10 tours
+        bcrypt.hash(password, 10, function (err, bcryptdPassword) {
+          //je crée mon nouveau user
+          User.create({
+            email: emailCryptoJs,
+            lastname: lastName,
+            firstname: firstName,
+            password: bcryptdPassword,
+            isAdmin: 0,
+          })
+            //je retourne identifiant du nouveau user
+            .then(function () {
+              return res.status(201).json({ message: "compte créé" });
+            })
+            .catch(function (err) {
+              return res
+                .status(500)
+                .json({ error: "Utilisateur ne peut pas être trouvé" });
             });
-            //j'enregistre le user dans la base de données
-            user.save()
-                .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-                .catch(error => res.status(400).json({ error }));
-        })
-        .catch(error => res.status(500).json({ error }));
+        });
+      }
+      //s'il existe
+      else {
+        return res.status(409).json({ error: "Utilisateur existant" });
+      }
+    })
+    .catch(function (err) {
+      return res.status(500).json({ err });
+    });
 };
-
 
 //Connexion d'utilisateur existant -- middleware avec fonction login
 exports.login = (req, res, next) => {
-
     
     //je récupère les paramètres de connexion
     let email = req.body.email;
@@ -53,7 +79,7 @@ exports.login = (req, res, next) => {
     const emailCryptoJs = cryptojs.HmacSHA512(req.body.email, "CLE_SECRETE").toString();
 
     //Je récupère l'utilisateur de la base de données
-    User.findOne({ email: emailCryptoJs })
+    User.findOne({ where: { email: emailCryptoJs } })
         .then(user => {
             //si l'utilisateur existe par rapport à son email
             if (user) {
