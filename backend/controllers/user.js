@@ -83,7 +83,6 @@ exports.login = (req, res, next) => {
         .then(user => {
             //si l'utilisateur existe par rapport à son email
             if (user) {
-
             //si user, on compare le mot de passe envoyer par l'utilisateur qui veut se connecter avec le hash du user dans la base de données
             bcrypt.compare(req.body.password, user.password)
             .then(valid => {

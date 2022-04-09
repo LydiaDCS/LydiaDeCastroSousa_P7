@@ -24,19 +24,8 @@ const Signup = () => {
       })
       .then((res) => {
         if (res.ok) {
-          console.log(res);
-            return res.json();
+            window.location.assign("/login");
         }
-      })
-      .then((user) => {
-        console.log(user);
-        user={
-          firstName:"user.firstName",
-          lastName:"user.lastName",
-          email:"user.email",
-          password:"user.password",
-        }
-        window.location.assign("/login");
       })
       .catch((err) => {
         console.log(err);

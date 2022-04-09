@@ -23,15 +23,8 @@ const Login = (data) => {
         })
         .then((res) => {
           if (res.ok) {
-              return res.json();
+            window.location.assign("/forum");
           }
-        })
-        .then((user) => {
-          user = {
-            email:"user.email",
-            password:"user.password"
-          }
-          window.location.assign("/forum");
         })
         .catch((err) => {
           console.log(err);
