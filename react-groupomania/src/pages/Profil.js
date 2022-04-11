@@ -22,10 +22,6 @@ const Profil = () => {
     return ( <div >
         <Header/>
         <div className='container'>
-            <div className='comptes'>
-                <a href='/'>Administrateur</a>
-                <a href='/'>Employé</a>  
-            </div>
             <section class="profil_container">
                 <h1> Informations </h1>
             <div className='profil'>
@@ -34,22 +30,24 @@ const Profil = () => {
             />
             <input accept="image/jpg image/png image/gif" type="file" className='addimages'/>
             </div> 
-            <label for="text-post"></label>
+            <label htmlFor="text-post"></label>
             
             <div className="info">
                 <div className='form-group'>
-                <label for="name">Nom :</label>
+                <label htmlFor="name">Nom :</label>
                 <input formcontrolname="name" id="name" type="text"/>
                 </div>
                 <div className='form-group'>
-                <label for="name">Prénom :</label>
+                <label htmlFor="name">Prénom :</label>
                 <input formcontrolname="prénom" id="prénom" type="text"/>
                 </div>
             </div>
             </div>
             </section>
+            <div className='changebuttons'>
             <button className="deletebutton" onClick={deleteProfile()}>Supprimer</button>
             <button className="modifybutton">Modifier</button>
+            </div>
             <div className='buttons'>
             <Button_forum/>
             <Button_deconnect/>

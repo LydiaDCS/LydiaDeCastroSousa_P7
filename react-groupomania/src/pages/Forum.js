@@ -12,15 +12,15 @@ const Forum = () => {
         <div className='page'>
         <section className='main'>
         <h1 > Bienvenue sur Groupomania </h1> <br/>
-        <div class="poster">
+        <div className="poster">
         <form>
             <div class="poster-header">
             <img alt="profil" class="profil-picture" src=""/>
-            <label for="text-post"></label>
+            <label htmlFor="text-post"></label>
             <input type="text" name="text-post" class="text-post" id="text-post" placeholder="Exprimez-vous"></input>
             </div>
             <div class="poster-footer">
-                <label for="file-input-poster">
+                <label htmlFor="file-input-poster">
                    
                     <p>Importez une image</p>
                 </label>

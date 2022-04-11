@@ -82,8 +82,13 @@ exports.login = (req, res, next) => {
     User.findOne({ where: { email: emailCryptoJs } })
         .then(user => {
             //si l'utilisateur existe par rapport à son email
-            if (user) {
-            //si user, on compare le mot de passe envoyer par l'utilisateur qui veut se connecter avec le hash du user dans la base de données
+            if (!user) {
+            //non autorisé
+            return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+            }
+            //s'il n'existe pas
+           
+                //si user, on compare le mot de passe envoyer par l'utilisateur qui veut se connecter avec le hash du user dans la base de données
             bcrypt.compare(req.body.password, user.password)
             .then(valid => {
             //si comparaison pas bonne
@@ -99,13 +104,6 @@ exports.login = (req, res, next) => {
                 });
             })
             .catch(error => res.status(500).json({ error }));
-
-            }
-            //s'il n'existe pas
-            else{
-                //non autorisé
-                return res.status(401).json({ error: 'Utilisateur non trouvé !' });
-            } 
         })
         .catch(error => res.status(500).json({ error }));
 };

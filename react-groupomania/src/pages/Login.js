@@ -24,6 +24,8 @@ const Login = (data) => {
         .then((res) => {
           if (res.ok) {
             window.location.assign("/forum");
+          } else{
+            alert ("Cet utilisateur n'existe pas !");
           }
         })
         .catch((err) => {

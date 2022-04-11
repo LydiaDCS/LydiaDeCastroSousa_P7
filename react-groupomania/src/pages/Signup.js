@@ -25,7 +25,7 @@ const Signup = () => {
       .then((res) => {
         if (res.ok) {
             window.location.assign("/login");
-        }
+        } alert ("Utilisateur créé !");
       })
       .catch((err) => {
         console.log(err);
