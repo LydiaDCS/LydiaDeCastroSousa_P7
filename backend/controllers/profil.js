@@ -6,6 +6,7 @@ exports.getOneUser = (req, res, next) => {
     }).then(
         (user) => {
             res.status(200).json(user);
+            console.log(user);
         }
     ).catch(
         (error) => {

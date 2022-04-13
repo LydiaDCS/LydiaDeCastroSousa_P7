@@ -22,21 +22,6 @@ const Profil = () => {
     })
     console.log(user);
 
-    /* let userId=JSON.parse(localStorage.getItem("userId"));
-    let user = {
-    };
-
-    async function fetchApi() {
-        await fetch("http://localhost:3000/api/forum/:id" + userId)
-            .then((res) => res.json())
-            .then(user =    
-                ({firstname :user.firstname,
-                lastName:user.lastName})
-            );
-    }
-    fetchApi();
-    console.log(user);  */
-
 function deleteProfile(){
     
 }
