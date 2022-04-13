@@ -15,6 +15,7 @@ body {
     margin-left: 30%;
     border-radius: 20px;
     padding: 20px;
+    margin-bottom: 100px;
 }
 
 form,
@@ -34,6 +35,7 @@ article {
 .nav_list {
     display: flex;
     flex-direction: row;
+    margin-right: 15px;
 }
 
 @media screen and (min-width: 700px) and (max-width: 1100px) {
@@ -45,19 +47,30 @@ article {
         flex-direction: column;
     }
     .main {
-        margin-left: 20%;
+        margin-left: 10%;
     }
 }
 
 @media screen and (min-width: 180px) and (max-width: 700px) {
     .page {
         column-gap: 0.5rem;
+        grid-template-columns: 1fr;
     }
     .nav_list {
         display: flex;
-        flex-direction: column;
+        grid-row: 1/1;
     }
     .main {
-        margin-left: 10%;
+        margin-left: 5%;
+        margin-right: 5%;
+        grid-row: 2/2;
     }
+}
+
+.text-post {
+    border: solid rgb(26, 110, 171) 3px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: rgb(135, 206, 238);
+    width: 100%;
 }

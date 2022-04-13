@@ -7,6 +7,26 @@ import Button_deconnect from '../components/Button_deconnect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Forum = () => {
+    const sendMessage = (message)=>{
+        fetch("http://localhost:3000/api/forum",{
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              message,
+            })
+          })
+          .then((res) => {
+            if (res.ok) {
+               console.log(res);
+            } alert ("Message posté !");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        }
     return ( <div >
         <Header/>
         <div className='page'>
@@ -14,62 +34,27 @@ const Forum = () => {
         <h1 > Bienvenue sur Groupomania </h1> <br/>
         <div className="poster">
         <form>
-            <div class="poster-header">
-            <img alt="profil" class="profil-picture" src=""/>
-            <label htmlFor="text-post"></label>
-            <input type="text" name="text-post" class="text-post" id="text-post" placeholder="Exprimez-vous"></input>
+            <div className="poster-header">
+                <img alt="profil" className="profil-picture" src=""/>
+                {/*mettre prénom de l'utilisateur*/} 
             </div>
-            <div class="poster-footer">
+            <div className='poster-main'>
+            <label htmlFor="text-post"></label>
+            <input type="text" name="text-post" className="text-post" id="text-post" placeholder="Exprimez-vous"></input>
+            </div>
+
+            <div className="poster-footer">
                 <label htmlFor="file-input-poster">
-                   
-                    <p>Importez une image</p>
+                    <p>Sélectionnez une image</p>
+                    <br/>
+                    <br/>
                 </label>
                 <input type="file" id="file-input-poster" name="image" accept="images/*"/>
             </div>
-<button type="submit" id="submit-post"> Envoyer</button>
+<button type="submit" onClick={sendMessage} id="submit-post"> Envoyer</button>
         </form>
         </div>
         <br/>
-        <article className='post data'>
-            <div className='post-header'>
-                <a className='profile-link' href=""></a>
-                <div className='post-header-picture'>
-                    <image src="" alt="portrait de l'auteur de la publication" className='profile-picture'/>
-                    <div className='more-data'>
-                        <p className='author'></p>
-                        <p className='date'></p>
-                    </div>
-                </div>
-            </div>
-            <div className='post-body'>
-                <div className='body'>
-                    <p className='post-message'> Test message</p>
-                </div>
-            </div>
-            <div className='post-footer'>
-                <div className='like-comment'>
-                    <div className='like-container'>
-                    <p className='like-count'></p>
-                    </div>
-                    <div className='comment-container'>
-                        <p className='comment-count'></p>
-                    </div>
-                </div>
-                <hr></hr>
-                <div className='comment-section'>
-                    <div className='comment'>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </article>
-        <br/>
-        <article className='post data'>
-            
-        </article>
 
         </section>
         <nav className='nav'>

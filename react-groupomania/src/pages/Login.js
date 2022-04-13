@@ -32,24 +32,24 @@ const Login = () => {
           console.log(data);
           localStorage.setItem("userId", data.userId);
           localStorage.setItem("token", data.token);
-          window.location.assign("/forum");
-          getLocal();
+          window.location.assign("/forum")
+          /* getLocal();  */
         })
         .catch((err) => {
           console.log(err);
         });
       }
 
-      /* function getLocal(){
-        let storage=JSON.parse(localStorage.getItem("token"));
+     /*   function getLocal(){
+        let storage = JSON.parse(localStorage.getItem("userId"));
         console.log(storage);
-        if(storage ==null){
-          window.location.assign("/signup");
+        if(storage === null){
+           window.location.assign("/signup"); 
         }else{
-          window.location.assign("/forum");
+           window.location.assign("/forum"); 
         }
       }
-       */
+        */
     return ( < div>
         <Header/>
         <div>
