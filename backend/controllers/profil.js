@@ -2,10 +2,10 @@
 //je récupère les infos de mon user 
 exports.getOneUser = (req, res, next) => {
     User.findOne({
-        _id: req.params.id
+        id: req.params.id
     }).then(
-        (User) => {
-            res.status(200).json(User);
+        (user) => {
+            res.status(200).json(user);
         }
     ).catch(
         (error) => {
@@ -18,13 +18,13 @@ exports.getOneUser = (req, res, next) => {
 
 exports.modifyUser = (req, res, next) => {
     const user = new User({
-        _id: req.params.id,
+        id: req.params.id,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         imageUrl: req.body.imageUrl,
         userId: req.body.userId
     });
-    User.updateOne({ _id: req.params.id }, user)
+    User.updateOne({ id: req.params.id }, user)
     .then(
         () => {
             res.status(201).json({
@@ -41,7 +41,7 @@ exports.modifyUser = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-    User.deleteOne({ _id: req.params.id })
+    User.deleteOne({ id: req.params.id })
     .then(
         () => {
             res.status(200).json({

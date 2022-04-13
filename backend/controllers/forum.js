@@ -2,7 +2,7 @@ const Message = require('../models/message');
 
 exports.createMessage = (req, res, next) => {
     const message = new Message({
-        _id: req.params.id,
+        id: req.params.id,
         title: req.body.title,
         content:req.body.content,
         imageUrl: req.body.imageUrl,
@@ -47,7 +47,7 @@ exports.getAllMessage = (req, res, next) => {
 
 exports.getOneMessage = (req, res, next) => {
     Message.findOne({
-        _id: req.params.id
+        id: req.params.id
     }).then(
         (message) => {
             res.status(200).json(message);
@@ -63,13 +63,13 @@ exports.getOneMessage = (req, res, next) => {
 
 exports.modifyMessage = (req, res, next) => {
     const Message = new Message({
-        _id: req.params.id,
+        id: req.params.id,
         title: req.body.title,
         content: req.body.content,
         imageUrl: req.body.imageUrl,
         userId: req.body.userId
     });
-    Message.updateOne({ _id: req.params.id }, message).then(
+    Message.updateOne({ id: req.params.id }, message).then(
         () => {
             res.status(201).json({
                 message: 'Thing updated successfully!'
@@ -85,7 +85,7 @@ exports.modifyMessage = (req, res, next) => {
 };
 
 exports.deleteMessage = (req, res, next) => {
-    Message.deleteOne({ _id: req.params.id }).then(
+    Message.deleteOne({ id: req.params.id }).then(
         () => {
             res.status(200).json({
                 message: 'Deleted!'
@@ -113,7 +113,7 @@ exports.likeMessage = (req, res, next) => {
     switch (likeStatus) {
         // ajout d'un like
         case 1:
-            Sauce.updateOne({ _id: sauceId }, {
+            Sauce.updateOne({ id: sauceId }, {
                     //j'incrémente le champs likes
                     $inc: { likes: +1 },
                     //j'ajoute le userId au tableau usersLiked
@@ -125,7 +125,7 @@ exports.likeMessage = (req, res, next) => {
 
             //ajout d'un dislike    
         case -1:
-            Sauce.updateOne({ _id: sauceId }, {
+            Sauce.updateOne({ id: sauceId }, {
                     $inc: { dislikes: +1 },
                     $push: { usersDisliked: req.body.userId }
                 })
@@ -135,11 +135,11 @@ exports.likeMessage = (req, res, next) => {
 
             // suppression like et dislike    
         case 0:
-            Sauce.findOne({ _id: sauceId })
+            Sauce.findOne({ id: sauceId })
                 .then(sauce => {
                     //Supprimer son like du tableau UsersLiked
                     if (sauce.usersLiked.includes(userId)) {
-                        Sauce.updateOne({ _id: sauceId }, {
+                        Sauce.updateOne({ id: sauceId }, {
                                 //je retire le like du champs likes
                                 $inc: { likes: -1 },
                                 // je retire le userId du tableau usersLiked
@@ -149,7 +149,7 @@ exports.likeMessage = (req, res, next) => {
                             .catch((error) => res.status(400).json({ error }));
                     } else if (sauce.usersDisliked.includes(userId)) {
                         // Supprimer son dislike de usersDisliked
-                        Sauce.updateOne({ _id: sauceId }, {
+                        Sauce.updateOne({ id: sauceId }, {
                                 $inc: { dislikes: -1 },
                                 $pull: { usersDisliked: userId }
                             })

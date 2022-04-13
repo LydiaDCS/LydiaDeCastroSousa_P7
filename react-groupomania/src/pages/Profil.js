@@ -7,17 +7,21 @@ import Button_forum from '../components/Button_forum';
 
 
 const Profil = () => {
+    let userId= localStorage.getItem("userId");
+    let token = localStorage.getItem("token");
+
     const [user, setUser] = useState(null)
     useEffect(()=>{
-        fetch(`http://localhost:3000/api/user/${id}`,{
+        fetch(`http://localhost:3000/api/profil/${userId}`,{
             headers: {
-                authorization:'Bearer'
+                'Authorization':'Bearer ' + token
             }
         })
         .then(user => setUser(user))
         .catch(err => console.log(err))
     })
     console.log(user);
+
     /* let userId=JSON.parse(localStorage.getItem("userId"));
     let user = {
     };
@@ -51,8 +55,8 @@ function deleteProfile(){
             
             <div className="info">
                 
-                <p className="name">Nom :{user && user.lastname}</p>
-                <p className="name">Prénom : {user && user.firstname}</p>
+                <p className="name">Nom :</p>
+                <p className="name">Prénom : </p>
 
                 {/* <div className='changeprofile'>
                 <div className='form-group'>
