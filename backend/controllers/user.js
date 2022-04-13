@@ -71,7 +71,7 @@ exports.login = (req, res, next) => {
     let password = req.body.password;
 
     //je vérifie si les champs si rempli
-    if (email == null || password == null){
+    if (email === null || password === null){
         return res.status(400).json({'error':'certains champs sont vides'});
     }
 
@@ -81,13 +81,12 @@ exports.login = (req, res, next) => {
     //Je récupère l'utilisateur de la base de données
     User.findOne({ where: { email: emailCryptoJs } })
         .then(user => {
-            //si l'utilisateur existe par rapport à son email
+            //si l'utilisateur n'existe pas par rapport à son email
             if (!user) {
             //non autorisé
             return res.status(401).json({ error: 'Utilisateur non trouvé !' });
             }
             //s'il n'existe pas
-           
                 //si user, on compare le mot de passe envoyer par l'utilisateur qui veut se connecter avec le hash du user dans la base de données
             bcrypt.compare(req.body.password, user.password)
             .then(valid => {
@@ -97,8 +96,8 @@ exports.login = (req, res, next) => {
                 }
                  //si comparaison est bonne, j'utilise la fonction sign pour encoder un nouveau token qui contient un payload (données encodées dans le token) grâce à une clé secrète temporaire, config expiration)
                 res.status(200).json({
-                    userId: user._id,
-                    token: jwt.sign({ userId: user._id, isAdmin:user._isAdmin },
+                    userId: user.id,
+                    token: jwt.sign({ userId: user.id, isAdmin:user.isAdmin },
                     'RANDOM_TOKEN_SECRET', { expiresIn: '24h' }
                     )
                 });

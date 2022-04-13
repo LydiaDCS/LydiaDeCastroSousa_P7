@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import Button_sign from '../components/Button_sign';
 import {useForm} from 'react-hook-form';
 
-const Login = (data) => {
+const Login = () => {
     const {register, handleSubmit, formState:{errors}} = useForm();
     
     const sendRequest = ({email, password}) => {
@@ -23,16 +23,33 @@ const Login = (data) => {
         })
         .then((res) => {
           if (res.ok) {
-            window.location.assign("/forum");
+            return res.json();
           } else{
             alert ("Cet utilisateur n'existe pas !");
           }
+        })
+        .then((data)=>{
+          console.log(data);
+          localStorage.setItem("userId", data.userId);
+          localStorage.setItem("token", data.token);
+          window.location.assign("/forum");
+          getLocal();
         })
         .catch((err) => {
           console.log(err);
         });
       }
 
+      /* function getLocal(){
+        let storage=JSON.parse(localStorage.getItem("token"));
+        console.log(storage);
+        if(storage ==null){
+          window.location.assign("/signup");
+        }else{
+          window.location.assign("/forum");
+        }
+      }
+       */
     return ( < div>
         <Header/>
         <div>
