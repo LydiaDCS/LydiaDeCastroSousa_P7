@@ -16,10 +16,8 @@ exports.getOneUser = (req, res, next) => {
         }
     );
 };
-
 exports.modifyUser = (req, res, next) => {
     const user = new User({
-        id: req.params.id,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         imageUrl: req.body.imageUrl,

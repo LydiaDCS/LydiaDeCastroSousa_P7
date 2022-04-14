@@ -22,11 +22,59 @@ const Profil = () => {
         .then(user => setUser(user))
         .catch(err => console.log(err))
     })
-    console.log(user);
 
 function deleteProfile(){
-    
+    fetch(`http://localhost:3000/api/profil/${userId}`,{
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'bearer',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else{
+          alert ("Cet utilisateur est supprimé !");
+        }
+      })
+      .then((data) => {console.log(data)})
+      .catch((err) => {
+        console.log(err);
+      });
 }
+
+function modifyProfile(){
+
+}
+
+    const [selectedFile, setSelectedFile] = useState();
+    const [isFilePicked, setIsFilePicked] =useState(false);
+
+    const changeHandler =(event)=>{
+        setSelectedFile(event.target.files[0]);
+        setIsFilePicked(true);
+    }
+
+    const handleSubmit=()=>{
+const formData = new FormData();
+formData.append('File', selectedFile);
+fetch(`http://localhost:3000/api/profil/${userId}`,
+{
+    method:'POST',
+    body: formData,
+}
+)
+.then((response)=>response.json())
+.then((result)=>{
+    console.log('Success:',result);
+})
+.catch((error)=>{
+    console.error('Error:',error);
+});
+    };
+
     return ( <div >
         <Header/> 
         <div className='container'>
@@ -36,31 +84,33 @@ function deleteProfile(){
             <div className='profil-image'> 
             <img alt="profil" className="profil-picture" src="images/male-icon-vector-user-person-profile-avatar-in-flat-color-glyph-pictogram-illustration-400-163243023.jpg"
             />
-            <label className='imagesForm'>Sélectionnez une image:</label>
-            <input accept="image/jpg image/png image/gif" type="file" className='addimages'/>
+            <input type="file" className='addimages' onChange={changeHandler}/>
+            {isFilePicked?(
+                <div>
+                    <p>Filename:{selectedFile.name}</p>
+                    <p>Filetype:{selectedFile.type}</p>
+                    <p>Size in bytes: {selectedFile.size}</p>
+                    <p>
+                        lastModifiedDate:{''}
+                        {selectedFile.lastModifiedDate.toLocaleDateString()}
+                    </p>
+                </div>
+            ) :(
+                <p>Sélectionnez une image</p>
+            )}
             </div>
+            <button onClick={handleSubmit}>Enregistrer</button>
             
-            <div className="info">
+            <div className="info" deleteProfile={userId}>
                 
                 <p className="name">Nom : {lastname}</p>
                 <p className="name">Prénom : {firstname}</p>
-
-                {/* <div className='changeprofile'>
-                <div className='form-group'>
-                <label htmlFor='name'>Nom :</label>
-                <input formcontrolname="name" id="name" type="text"/>
-                </div>
-                <div className='form-group'>
-                <label htmlFor="name">Prénom :</label>
-                <input formcontrolname="prénom" id="prénom" type="text"/>
-                </div>
-                </div> */}
             </div>
             </div>
             </section>
             <div className='changebuttons'>
-            <button className="deletebutton" onClick={deleteProfile()}>Supprimer</button>
-            <button className="modifybutton">Modifier</button>
+            <button className="deletebutton" onClick={()=>{deleteProfile(userId);}}>Supprimer</button>
+            <button className="modifybutton" onClick={modifyProfile()}>Modifier</button>
             </div>
             <div className='buttons'>
             <Button_forum/>

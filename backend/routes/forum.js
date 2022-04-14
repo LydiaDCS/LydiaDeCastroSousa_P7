@@ -12,7 +12,6 @@ router.get('/',auth, forumCtrl.getAllMessage);
 router.post('/',auth, multer, forumCtrl.createMessage);
 
 router.get('/:id',auth, forumCtrl.getOneMessage);
-router.put('/:id',auth, multer, forumCtrl.modifyMessage);
 router.delete('/:id',auth, forumCtrl.deleteMessage);
 
 //liker un post

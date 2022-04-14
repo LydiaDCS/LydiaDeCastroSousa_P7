@@ -1,25 +1,23 @@
 const Message = require('../models/message');
 
-exports.createMessage = (req, res, next) => {
-    const message = new Message({
-        id: req.params.id,
-        title: req.body.title,
-        content:req.body.content,
-        imageUrl: req.body.imageUrl,
-        userId: req.body.userId
-    });
+//j'importe le package fs de node pour avoir accès aux différentes opérations liées au système de fichiers
+const fs = require('fs');
 
-    if(title == null || content == null){
-        return res.status(400).jon({'error':'missing parameters'});
-    }
-    User.findOne({
-        where:{id:userId}
-    })
-    message.save()
+//Créer un message :POST
+exports.createMessage = (req, res, next) => {
+    const {username, texte} = req.body.message;
+    const message = new Message({
+        username:username,
+        texte:texte,
+        imageUrl:'',
+             //je génère l'url de l'image: http /https + nom d'hôte + nom du fichier
+             imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    });
+    message.create(message)
     .then(
         () => {
             res.status(201).json({
-                message: 'Post saved successfully!'
+                message: 'Post created!!'
             });
         }
     ).catch(
@@ -31,6 +29,7 @@ exports.createMessage = (req, res, next) => {
     );
 };
 
+//Récupérer toutes les messages avec la méthode find :GET
 exports.getAllMessage = (req, res, next) => {
     Message.find().then(
         (messages) => {
@@ -45,6 +44,7 @@ exports.getAllMessage = (req, res, next) => {
     );
 };
 
+//Recupérer une seul message avec la méthode findOne : GET
 exports.getOneMessage = (req, res, next) => {
     Message.findOne({
         id: req.params.id
@@ -61,45 +61,24 @@ exports.getOneMessage = (req, res, next) => {
     );
 };
 
-exports.modifyMessage = (req, res, next) => {
-    const Message = new Message({
-        id: req.params.id,
-        title: req.body.title,
-        content: req.body.content,
-        imageUrl: req.body.imageUrl,
-        userId: req.body.userId
-    });
-    Message.updateOne({ id: req.params.id }, message).then(
-        () => {
-            res.status(201).json({
-                message: 'Thing updated successfully!'
-            });
-        }
-    ).catch(
-        (error) => {
-            res.status(400).json({
-                error: error
-            });
-        }
-    );
-};
 
+//Supprimer un message: DELETE si seulement message.userId == auteur de la requête ou isAdmin
 exports.deleteMessage = (req, res, next) => {
-    Message.deleteOne({ id: req.params.id }).then(
-        () => {
-            res.status(200).json({
-                message: 'Deleted!'
+    //recherche la sauce
+    Message.findOne({ id: req.params.id})
+        .then((message) => {
+            //on récupère le nom du fichier grâce à l'url de l'image (2ème élément après /images/)
+            const filename = sauce.imageUrl.split('/images/')[1];
+            //je supprime le fichier avec fs.unlink
+            fs.unlink(`images/${filename}`, () => {
+                //quand fichier supprimé, on supprime l'ojet de la base de données
+                message.deleteOne({ id: req.params.id })
+                    .then(() => res.status(200).json({ message: 'Message supprimée !' }))
+                    .catch(error => res.status(400).json({ error }));
             });
-        }
-    ).catch(
-        (error) => {
-            res.status(400).json({
-                error: error
-            });
-        }
-    );
+        })
+        .catch(error => res.status(500).json({ error }));
 };
-
 
 //-------------------------------------- export du middleware/fonction likeSauce----------------------------------------
 exports.likeMessage = (req, res, next) => {
@@ -166,7 +145,7 @@ exports.likeMessage = (req, res, next) => {
 
 exports.commentMessage = (req, res, next) => {
     Message.find().then(
-        (message) => {
+        () => {
             res.status(200).json(messages);
         }
     ).catch(

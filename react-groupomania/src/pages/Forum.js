@@ -7,8 +7,9 @@ import Button_deconnect from '../components/Button_deconnect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Forum = () => {
+  let lastname =localStorage.getItem("lastname");
   let firstname =localStorage.getItem("firstname");
-    const sendMessage = (message)=>{
+    const sendMessage = (username, texte, image)=>{
         fetch("http://localhost:3000/api/forum",{
             method: 'POST',
             headers: {
@@ -16,12 +17,13 @@ const Forum = () => {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              message,
+              username,
+              texte,
+              image
             })
           })
           .then((res) => {
             if (res.ok) {
-               console.log(res);
             } alert ("Message posté !");
           })
           .catch((err) => {
@@ -36,23 +38,17 @@ const Forum = () => {
         <div className="poster">
         <form>
             <div className="poster-header">
-                <img alt="profil" className="profil-picture" src=""/>
-                {/*mettre prénom de l'utilisateur*/} 
+                <img alt="profil" className="profil-picture-forum" src="images/male-icon-vector-user-person-profile-avatar-in-flat-color-glyph-pictogram-illustration-400-163243023.jpg"/>
+                <p>{lastname} {firstname}</p> 
             </div>
             <div className='poster-main'>
             <label htmlFor="text-post"></label>
-            <input type="text" name="text-post" className="text-post" id="text-post" placeholder="Exprimez-vous"></input>
+            <textarea type="text" name="text-post" className="text-post" id="text-post" placeholder="Exprimez-vous"></textarea>
+            <br/>
+                <input type="file" id="file-input-poster" className='buttons' accept="images/*"/>
             </div>
 
-            <div className="poster-footer">
-                <label htmlFor="file-input-poster">
-                    <p>Sélectionnez une image</p>
-                    <br/>
-                    <br/>
-                </label>
-                <input type="file" id="file-input-poster" name="image" accept="images/*"/>
-            </div>
-<button type="submit" onClick={sendMessage} id="submit-post"> Envoyer</button>
+<button type="submit" onSubmit={sendMessage} id="submit-post"> Envoyer</button>
         </form>
         </div>
         <br/>
