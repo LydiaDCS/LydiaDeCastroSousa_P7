@@ -7,6 +7,7 @@ import Button_deconnect from '../components/Button_deconnect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Forum = () => {
+  let firstname =localStorage.getItem("firstname");
     const sendMessage = (message)=>{
         fetch("http://localhost:3000/api/forum",{
             method: 'POST',
@@ -31,7 +32,7 @@ const Forum = () => {
         <Header/>
         <div className='page'>
         <section className='main'>
-        <h1 > Bienvenue sur Groupomania </h1> <br/>
+        <h1 > Bienvenue sur Groupomania {firstname} </h1> <br/>
         <div className="poster">
         <form>
             <div className="poster-header">

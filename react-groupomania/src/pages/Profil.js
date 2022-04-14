@@ -9,6 +9,8 @@ import Button_forum from '../components/Button_forum';
 const Profil = () => {
     let userId= localStorage.getItem("userId");
     let token = localStorage.getItem("token");
+    let firstname =localStorage.getItem("firstname");
+    let lastname = localStorage.getItem("lastname");
 
     const [user, setUser] = useState(null)
     useEffect(()=>{
@@ -40,8 +42,8 @@ function deleteProfile(){
             
             <div className="info">
                 
-                <p className="name">Nom :</p>
-                <p className="name">Prénom : </p>
+                <p className="name">Nom : {lastname}</p>
+                <p className="name">Prénom : {firstname}</p>
 
                 {/* <div className='changeprofile'>
                 <div className='form-group'>

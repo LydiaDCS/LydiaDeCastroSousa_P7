@@ -97,8 +97,10 @@ exports.login = (req, res, next) => {
                  //si comparaison est bonne, j'utilise la fonction sign pour encoder un nouveau token qui contient un payload (données encodées dans le token) grâce à une clé secrète temporaire, config expiration)
                 res.status(200).json({
                     userId: user.id,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
                     token: jwt.sign({ userId: user.id, isAdmin:user.isAdmin },
-                    'RANDOM_TOKEN_SECRET', { expiresIn: '24h' }
+                    'RANDOM_TOKEN_SECRET', { expiresIn: '24h' },
                     )
                 });
             })

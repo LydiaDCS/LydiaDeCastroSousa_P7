@@ -6,6 +6,7 @@ import Button_log from '../components/Button_log';
 import {useForm} from 'react-hook-form';
 
 const Signup = () => {
+  localStorage.clear();
   const {register, handleSubmit, formState:{errors}} = useForm();
 
     const sendRequest = ({firstName, lastName, email, password}) => {
