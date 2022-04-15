@@ -5,15 +5,15 @@ const fs = require('fs');
 
 //Créer un message :POST
 exports.createMessage = (req, res, next) => {
-    const {username, texte} = req.body.message;
-    const message = new Message({
-        username:username,
-        texte:texte,
-        imageUrl:'',
-             //je génère l'url de l'image: http /https + nom d'hôte + nom du fichier
-             imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    });
-    message.create(message)
+    Message.create({
+        idUSERS: id,
+        title: title,
+        content: content,
+        attachment: imageUrl,
+        likes: 0
+      })
+
+    Message.save(Message)
     .then(
         () => {
             res.status(201).json({
@@ -27,8 +27,7 @@ exports.createMessage = (req, res, next) => {
             });
         }
     );
-};
-
+};  
 //Récupérer toutes les messages avec la méthode find :GET
 exports.getAllMessage = (req, res, next) => {
     Message.find().then(

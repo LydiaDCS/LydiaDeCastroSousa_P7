@@ -27,7 +27,7 @@ function deleteProfile(){
     fetch(`http://localhost:3000/api/profil/${userId}`,{
         method: 'DELETE',
         headers: {
-          'Authorization': 'bearer',
+          'Authorization': 'bearer ' + token,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
@@ -48,7 +48,6 @@ function deleteProfile(){
 function modifyProfile(){
 
 }
-
     const [selectedFile, setSelectedFile] = useState();
     const [isFilePicked, setIsFilePicked] =useState(false);
 

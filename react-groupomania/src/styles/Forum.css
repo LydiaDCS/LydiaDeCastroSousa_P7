@@ -71,8 +71,14 @@ article {
     border: solid rgb(26, 110, 171) 3px;
     padding: 20px;
     border-radius: 20px;
-    background-color: rgb(135, 206, 238);
     width: 100%;
+}
+
+.titre-post {
+    border: solid rgb(26, 110, 171) 3px;
+    padding: 10px;
+    border-radius: 15px;
+    width: 30%;
 }
 
 .profil-picture-forum {
