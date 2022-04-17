@@ -86,12 +86,12 @@ const Forum = (title, content, attachment, like) => {
         </nav>
         </div>
         <Footer/>
-        {message.map(()=>{
+        {/* {message.map(()=>{
             <poster
             title={title}
             content={content}
             attachment={attachment}/>
-          })}
+          })} */}
         </div>
     );
 };
