@@ -13,7 +13,7 @@ exports.createMessage = (req, res, next) => {
         likes: 0
       })
 
-    Message.save(Message)
+    Message.save()
     .then(
         () => {
             res.status(201).json({

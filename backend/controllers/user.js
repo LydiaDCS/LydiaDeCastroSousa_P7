@@ -10,6 +10,8 @@ const jwt = require('jsonwebtoken');
 //j'importe le model User
 const { User } = require("../models");
 
+const fs = require('fs')
+
 //enregistrement de nouveaux utilisateurs -- middleware avec fonction signup
 exports.signup = (req, res, next) => {
   console.log(req.body);
@@ -97,9 +99,10 @@ exports.login = (req, res, next) => {
                  //si comparaison est bonne, j'utilise la fonction sign pour encoder un nouveau token qui contient un payload (données encodées dans le token) grâce à une clé secrète temporaire, config expiration)
                 res.status(200).json({
                     userId: user.id,
+                    isAdmin : user.isAdmin,
                     firstname: user.firstname,
                     lastname: user.lastname,
-                    token: jwt.sign({ userId: user.id, isAdmin:user.isAdmin },
+                    token: jwt.sign({ userId: user.id, isAdmin: user.isAdmin },
                     'RANDOM_TOKEN_SECRET', { expiresIn: '24h' },
                     )
                 });
@@ -107,5 +110,64 @@ exports.login = (req, res, next) => {
             .catch(error => res.status(500).json({ error }));
         })
         .catch(error => res.status(500).json({ error }));
+};
+
+
+//je récupère les infos de mon user 
+exports.getOneUser = (req, res, next) => {
+  User.findOne({ where:{id: req.params.id}})
+  .then((user) => {
+          res.status(200).json(user);
+          console.log(user);
+      }
+  ).catch(
+      (error) => {
+          res.status(404).json({
+              error: error
+          });
+      }
+  );
+};
+
+exports.updateUser = (req, res, next) => {
+  const user = req.file
+  ?{
+    ...req.body,
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${
+      req.file.filename
+    }`,
+  }:{...req.body}
+  
+  User.updateOne(user,{ id: req.params.id })
+  .then(
+      () => {
+          res.status(201).json({
+              message: 'User updated successfully!'
+          });
+      }
+  ).catch(
+      (error) => {
+          res.status(400).json({
+              error: error
+          });
+      }
+  );
+};
+
+exports.deleteUser = (req, res, next) => {
+  User.deleteOne({ id: req.params.id })
+  .then(
+      () => {
+          res.status(200).json({
+              message: 'Deleted!'
+          });
+      }
+  ).catch(
+      (error) => {
+          res.status(400).json({
+              error: error
+          });
+      }
+  );
 };
 

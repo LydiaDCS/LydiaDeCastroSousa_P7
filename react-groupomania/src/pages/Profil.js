@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import "../styles/Profil.css";
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Button_deconnect from '../components/Button_deconnect';
-import Button_forum from '../components/Button_forum';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { NavLink } from 'react-router-dom';
 
 
 const Profil = () => {
@@ -14,7 +13,7 @@ const Profil = () => {
 
     const [user, setUser] = useState(null)
     useEffect(()=>{
-        fetch(`http://localhost:3000/api/profil/${userId}`,{
+        fetch(`http://localhost:5050/api/profil/${userId}`,{
             headers: {
                 'Authorization':'Bearer ' + token
             }
@@ -24,7 +23,7 @@ const Profil = () => {
     })
 
 function deleteProfile(){
-    fetch(`http://localhost:3000/api/profil/${userId}`,{
+    fetch(`http://localhost:5050/api/profil/${userId}`,{
         method: 'DELETE',
         headers: {
           'Authorization': 'bearer ' + token,
@@ -56,10 +55,10 @@ function modifyProfile(){
         setIsFilePicked(true);
     }
 
-    const handleSubmit=()=>{
+const handleSubmit=()=>{
 const formData = new FormData();
 formData.append('File', selectedFile);
-fetch(`http://localhost:3000/api/profil/${userId}`,
+fetch(`http://localhost:5050/api/profil/${userId}`,
 {
     method:'POST',
     body: formData,
@@ -72,10 +71,29 @@ fetch(`http://localhost:3000/api/profil/${userId}`,
 .catch((error)=>{
     console.error('Error:',error);
 });
-    };
+};
 
     return ( <div >
-        <Header/> 
+        <div className='logo'>
+        <div className='header'>
+    <img
+    src='images/icon-left-font-monochrome-white.svg'
+    alt='logo entreprise'
+    /> 
+     <nav className='nav'>
+                <ul className='nav_list'>
+                <NavLink to="/message">
+                        <FontAwesomeIcon className='i' icon="fa-comments"/>
+                        </NavLink>
+                    
+      <NavLink to ="/Forum">
+      <FontAwesomeIcon className='i' icon="fas fa-home"/>
+      </NavLink>
+                    <Button_deconnect/>
+                </ul>
+        </nav>
+     </div>
+      </div> 
         <div className='container'>
             <section className="profil_container">
                 <h1> Informations </h1>
@@ -111,12 +129,12 @@ fetch(`http://localhost:3000/api/profil/${userId}`,
             <button className="deletebutton" onClick={()=>{deleteProfile(userId);}}>Supprimer</button>
             <button className="modifybutton" onClick={modifyProfile()}>Modifier</button>
             </div>
-            <div className='buttons'>
-            <Button_forum/>
-            <Button_deconnect/>
             </div>
-            </div>
-        <Footer/>
+            <br/>
+            <br/>
+            <div className='footer'>
+      <p>Groupomania - Copyright2022@</p>
+    </div>
         </div>
     );
 };

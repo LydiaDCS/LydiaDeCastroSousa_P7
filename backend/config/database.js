@@ -1,10 +1,9 @@
  //j'importe sequelize - gestion de ma base de données
     const sequelize = require('sequelize');
-    module.exports = new sequelize('database_development', 'root', 'lydiaDCS24!', {
-        host:'localhost',
-        dialect:'mysql',
+    module.exports = new sequelize(process.env.DB_DATABASE, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+        host: process.env.DB_HOST,
+        dialect:process.env.DB_DIALECT,
         operatorsAliases: false,
-
         pool:{
             max:5,
             min:0,

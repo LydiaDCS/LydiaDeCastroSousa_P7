@@ -14,7 +14,6 @@ const rateLimit = require('express-rate-limit');
 
 //Importation des routes
 const forumRoutes = require('./routes/forum');
-const profilRoutes = require('./routes/profil');
 const userRoutes = require('./routes/user');
 
 //Accès au chemin de notre système de fichiers
@@ -66,7 +65,6 @@ database.authenticate()
 
 //j'enregistre les routes
 app.use('/api/forum', forumRoutes)
-app.use('/api/profil', profilRoutes); 
 app.use('/api/user', userRoutes);
 
 

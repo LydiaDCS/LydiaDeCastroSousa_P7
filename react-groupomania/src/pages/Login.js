@@ -1,15 +1,15 @@
 import React from 'react';
 import "../styles/Login.css"
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Button_sign from '../components/Button_sign';
+import { NavLink } from 'react-router-dom';
+import "../styles/Button.css"
+import "../styles/Header.css"
 import {useForm} from 'react-hook-form';
 
 const Login = () => {
   localStorage.clear();
     const {register, handleSubmit, formState:{errors}} = useForm();
     const sendRequest = ({email, password}) => {
-        fetch(`http://localhost:3000/api/user/login`,{
+        fetch(`http://localhost:5050/api/user/login`,{
           method: 'POST',
           headers: {
             'Authorization': 'bearer',
@@ -42,15 +42,20 @@ const Login = () => {
       }
        
     return ( < div>
-        <Header/>
+       <div className='logo'>
+    <img
+    src='images/icon-left-font-monochrome-white.svg'
+    alt='logo entreprise'
+    />
+    </div>
         <div>
         <form className='form' onSubmit={handleSubmit((sendRequest))}>
             <label htmlFor="email">Email :</label>
-            <input {...register ("email", {required:'Veuillez entrer une adresse mail valide', pattern: /^[a-zA-Zéèàïç0-9.!^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/g})}  type="email" placeholder="Email" />
-            <p className='msgerror'>{errors.email?.message}</p>
+            <input {...register ("email", {required:true, pattern: /^[a-zA-Zéèàïç0-9.!^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/g})}  type="email" placeholder="Email" />
+            <p className='msgerror'>{errors.email && <span>Adresse e-mail non valide</span>}</p>
             <label htmlFor="password">Mot de passe:</label>
-            <input {...register ("password", {required:'Mot de passe incorrect', minlengh:4 })}type="password" placeholder="Password"/>
-            <p className='msgerror'>{errors.password?.message}</p>
+            <input {...register ("password", {required:true, minlengh:4 })}type="password" placeholder="Password"/>
+            <p className='msgerror'>{errors.password && <span>Mot de passe incorrect</span>}</p>
              
       <p>Connectez-vous!</p> 
          <button type="submit">
@@ -59,10 +64,16 @@ const Login = () => {
           <div className='redirection'>
               <hr/>
               <p>Pas encore inscrit ?</p>
-          <Button_sign/>
+              <div className='button'>
+                <NavLink to = "/Signup" >
+                    <li> S'inscrire </li> 
+                </NavLink>  
+      </div>
           </div>
             </form> 
-            <Footer/>
+            <div className='footer'>
+      <p>Groupomania - Copyright2022@</p>
+    </div>
             </div>
     </div>
     )
