@@ -5,6 +5,7 @@ import "../styles/Button.css";
 import "../styles/Header.css"
 import {useForm} from 'react-hook-form';
 
+
 const Signup = () => {
   localStorage.clear();
   const {register, handleSubmit, formState:{errors}} = useForm();
