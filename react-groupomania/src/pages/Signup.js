@@ -1,7 +1,6 @@
 import React from 'react';
 import "../styles/Signup.css"
 import { NavLink } from 'react-router-dom';
-import "../styles/Button.css";
 import "../styles/Header.css"
 import {useForm} from 'react-hook-form';
 

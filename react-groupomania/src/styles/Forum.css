@@ -1,5 +1,7 @@
 body {
     height: 100%;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .page {
@@ -12,11 +14,10 @@ body {
 .main {
     display: flex;
     flex-direction: column;
-    margin-left: 18%;
-    padding: 100px;
-    margin-bottom: 0px;
-    margin-right: 18%;
-    background-color: rgb(227, 216, 216);
+    padding: 60px;
+    margin: 0px 15% 15px 15%;
+    background-color: #FFD7D7;
+    overflow-x: hidden;
 }
 
 form,
@@ -36,23 +37,14 @@ article {
 .nav_list {
     display: flex;
     flex-direction: row;
-    margin-right: 15px;
+    margin-top: 10px;
 }
 
-@media screen and (min-width: 700px) and (max-width: 1100px) {
-    .page {
-        column-gap: 3rem;
-    }
-    .nav_list {
-        display: flex;
-        flex-direction: column;
-    }
-    .main {
-        margin-left: 10%;
-    }
+.nav_list_desktop {
+    display: none;
 }
 
-@media screen and (min-width: 180px) and (max-width: 700px) {
+@media screen and (min-width: 180px) and (max-width: 900px) {
     .page {
         column-gap: 0.5rem;
         grid-template-columns: 1fr;
@@ -60,11 +52,29 @@ article {
     .nav_list {
         display: flex;
         grid-row: 1/1;
+        width: 20%;
+        display: none;
+    }
+    .nav_list_desktop {
+        display: initial;
+    }
+    .i_desktop {
+        color: #4E5166;
     }
     .main {
         margin-left: 5%;
         margin-right: 5%;
         grid-row: 2/2;
+        padding: 40px;
+    }
+}
+
+@media screen and (min-width: 700px) and (max-width: 1100px) {
+    .page {
+        column-gap: 3rem;
+    }
+    .main {
+        margin-left: 10%;
     }
 }
 
@@ -95,7 +105,7 @@ article {
 
 .logo {
     text-align: start;
-    background-color: #FA8072;
+    background-color: #FD2D01;
     margin-bottom: 0px;
     width: auto;
     padding: 0px 2% 10px 2%;
@@ -103,7 +113,7 @@ article {
 }
 
 .header {
-    background-color: #FA8072;
+    background-color: #FD2D01;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -111,7 +121,7 @@ article {
 
 .footer {
     margin-top: 0;
-    background-color: #FA8072;
+    background-color: #FD2D01;
     height: 80%;
     display: flex;
     align-items: center;
@@ -121,5 +131,10 @@ article {
     font-size: 20px;
     padding-top: 30px;
     padding-bottom: 30px;
+    margin-top: 40px;
+}
+
+.footer p {
+    margin-top: 0;
     margin-bottom: 0;
 }

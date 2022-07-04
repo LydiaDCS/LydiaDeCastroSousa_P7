@@ -3,39 +3,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgb(135, 206, 238);
+    background-color: #FFD7D7;
     padding: 50px 50px 50px 50px;
     margin: 0px 35% 20px 35%;
     border-radius: 20px;
-}
-
-@media screen and (min-width: 180px) and (max-width: 700px) {
-    .formuser {
-        margin: 0px 5% 0px 5%;
-    }
-}
-
-@media screen and (min-width: 700px) and (max-width: 1100px) {
-    .formuser {
-        margin: 0px 22% 0px 22%;
-    }
 }
 
 .formuser input {
     width: 300px;
     height: 30px;
     margin: 10px;
-    border: 3px solid #FA8072;
+    border: 3px solid #FD2D01;
     border-radius: 7px;
     padding: 15px 15px 15px 15px;
-}
-
-.formuser button:hover {
-    width: 150px;
-    background-color: red;
-    color: white;
-    font-size: 600;
-    cursor: pointer;
 }
 
 button {
@@ -45,12 +25,8 @@ button {
     font-weight: 600;
     margin-top: 15px;
     width: 150px;
-    background-color: #FA8072;
+    background-color: #FD2D01;
     font-size: 600;
-}
-
-.buttoninfo {
-    text-decoration: none;
     color: white;
 }
 
@@ -73,4 +49,49 @@ hr {
 
 .msgerror {
     color: red;
+}
+
+li {
+    list-style: none;
+    color: #FD2D01;
+    text-decoration: none;
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+li:hover,
+.i:hover,
+button:hover {
+    color: black;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.seconnect {
+    margin-left: 5%;
+    width: 10%;
+    border-radius: 20px 20px 20px 20px;
+}
+
+@media screen and (min-width: 700px) and (max-width: 1100px) {
+    .seconnect {
+        margin: 5%;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 180px) and (max-width: 700px) {
+    .seconnect {
+        margin: 5%;
+        width: 100%;
+    }
+}
+
+.i {
+    color: white;
+    font-size: 30px;
+    margin: 15px;
 }

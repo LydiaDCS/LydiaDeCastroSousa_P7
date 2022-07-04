@@ -7,9 +7,9 @@
 }
 
 .profil {
-    border: 3px solid rgb(135, 206, 238);
+    border: 3px solid #FFD7D7;
     border-radius: 20px;
-    background-color: rgb(135, 206, 238);
+    background-color: #FFD7D7;
     padding: 35px;
     width: 100%;
     margin: 0;
@@ -24,6 +24,7 @@
 .changebuttons {
     grid-column: 1/1;
     grid-row: 3/3;
+    margin-top: 25px;
 }
 
 .deletebutton {
@@ -111,7 +112,7 @@
 .deletebutton:hover,
 .modifybutton:hover {
     transform: scale(1.03);
-    background-color: red;
+    background-color: #FD2D01;
 }
 
 .buttons {

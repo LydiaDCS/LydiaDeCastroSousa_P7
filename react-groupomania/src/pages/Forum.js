@@ -19,7 +19,7 @@ const Forum = (title, content, attachment, like) => {
         'Authorization':'Bearer ' + token
       }
     })
-    .then(message => setMessage(message))
+    .then(message => setMessage(message)) 
     .catch(err => console.log(err))
 },[])
 
@@ -47,31 +47,50 @@ const Forum = (title, content, attachment, like) => {
           });
         } 
 
-    return ( <div >
-        
+    return ( 
+    <div> 
       <div className='logo'>
         <div className='header'>
-    <img
-    src='images/icon-left-font-monochrome-white.svg'
-    alt='logo entreprise'
-    /> 
-     <nav className='nav'>
-     <h4> Bienvenue {firstname} </h4> <br/>
-                <ul className='nav_list'>
-                <NavLink to="/message">
-                        <FontAwesomeIcon className='i' icon="fa-comments"/>
-                        </NavLink>
-                    <div>
-      <NavLink to="/Profil">
-      <FontAwesomeIcon className='i' icon="fas fa-user-edit"/>
-      </NavLink>
-    </div>
-                    <Button_deconnect/>
-                </ul>
-        </nav>
-     </div>
+        <img
+          src='images/icon-left-font-monochrome-white.svg'
+          alt='logo entreprise'
+        /> 
+          <nav className='nav'>
+          <h4> Bienvenue {firstname} </h4> <br/>
+            <ul className='nav_list'>
+            <NavLink to ="/Forum">
+                <FontAwesomeIcon className='i' icon="fas fa-home"/>
+              </NavLink>
+              <NavLink to="/message">
+                <FontAwesomeIcon className='i' icon="fa-comments"/>
+              </NavLink>
+            <div>
+              <NavLink to="/Profil">
+                <FontAwesomeIcon className='i' icon="fas fa-user-edit"/>
+              </NavLink>
+            </div>
+        <Button_deconnect/>
+            </ul>
+          </nav>
+        </div>
       </div> 
         <div className='page'>
+        <ul className='nav_list_desktop'>
+              <NavLink to ="/Forum">
+                <FontAwesomeIcon className='i' icon="fas fa-home"/>
+              </NavLink>
+              <NavLink to="/message">
+                <FontAwesomeIcon className='i_desktop' icon="fa-comments"/>
+              </NavLink>
+            <div>
+              <NavLink to="/Profil">
+                <FontAwesomeIcon className='i_desktop' icon="fas fa-user-edit"/>
+              </NavLink>
+            </div>
+            <NavLink to ="/login">
+              <FontAwesomeIcon className='i_desktop' icon="fas fa-sign-out-alt"/>
+            </NavLink>
+        </ul>
         <section className='main'>
         <div className="poster">
         <form onSubmit={sendMessage} >

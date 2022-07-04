@@ -8,7 +8,6 @@ const Button_deconnect = () => {
       <NavLink to ="/login">
       <FontAwesomeIcon className='i' icon="fas fa-sign-out-alt"/>
       </NavLink>
-      
     </div>
   );
 };
