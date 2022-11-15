@@ -3,6 +3,7 @@ import "../styles/Login.css"
 import { NavLink } from 'react-router-dom';
 import "../styles/Header.css"
 import {useForm} from 'react-hook-form';
+import Header from '../components/Header/Header';
 
 const Login = () => {
   localStorage.clear();
@@ -41,12 +42,7 @@ const Login = () => {
       }
        
     return ( < div>
-       <div className='logo'>
-    <img
-    src='images/icon-left-font-monochrome-white.svg'
-    alt='logo entreprise'
-    />
-    </div>
+       <Header/>
         <div>
         <form className='form' onSubmit={handleSubmit((sendRequest))}>
             <label htmlFor="email">Email :</label>

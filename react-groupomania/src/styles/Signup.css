@@ -1,65 +1,21 @@
-.form {
+.formuser {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #FFD7D7;
-    padding: 20px 50px 50px 50px;
-    margin: 0px 30% 40px 30%;
-    border-radius: 20px 20px 20px 20px;
+    padding: 50px 50px 50px 50px;
+    margin: 0px 35% 20px 35%;
+    border-radius: 20px;
 }
 
-@media screen and (min-width: 180px) and (max-width: 500px) {
-    .form {
-        margin: 0px 7% 0px 7%;
-    }
-}
-
-@media screen and (min-width: 500px) and (max-width: 700px) {
-    .form {
-        margin: 0px 10% 0px 10%;
-    }
-}
-
-@media screen and (min-width: 700px) and (max-width: 900px) {
-    .form {
-        margin: 0px 15% 0px 15%;
-    }
-}
-
-@media screen and (min-width: 900px) and (max-width: 1100px) {
-    .form {
-        margin: 0px 20% 0px 20%;
-    }
-}
-
-@media screen and (min-width: 1100px) and (max-width: 1300px) {
-    .form {
-        margin: 0px 25% 0px 25%;
-    }
-}
-
-@media screen and (min-width: 1300px) and (max-width: 1600px) {
-    .form {
-        margin: 0px 30% 0px 30%;
-    }
-}
-
-.form input {
+.formuser input {
     width: 300px;
     height: 30px;
     margin: 10px;
     border: 3px solid #FD2D01;
     border-radius: 7px;
     padding: 15px 15px 15px 15px;
-}
-
-.form button:hover {
-    width: 150px;
-    background-color: #FD2D01;
-    color: black;
-    font-size: 600;
-    cursor: pointer;
 }
 
 button {
@@ -71,10 +27,6 @@ button {
     width: 150px;
     background-color: #FD2D01;
     font-size: 600;
-}
-
-.buttoninfo {
-    text-decoration: none;
     color: white;
 }
 
@@ -83,6 +35,60 @@ a:hover {
     color: white;
 }
 
-.log {
-    margin-left: 0;
+hr {
+    width: 300px;
+    margin-top: 30px;
+}
+
+.redirection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.msgerror {
+    color: red;
+}
+
+li {
+    list-style: none;
+    color: #FD2D01;
+    text-decoration: none;
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+li:hover,
+.i:hover,
+button:hover {
+    color: black;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.seconnect {
+    margin-left: 5%;
+    border-radius: 20px 20px 20px 20px;
+}
+
+@media screen and (min-width: 700px) and (max-width: 1100px) {
+    .seconnect {
+        margin: 5%;
+    }
+}
+
+@media screen and (min-width: 180px) and (max-width: 700px) {
+    .seconnect {
+        margin: 5%;
+    }
+}
+
+.i {
+    color: white;
+    font-size: 30px;
+    margin: 15px;
 }

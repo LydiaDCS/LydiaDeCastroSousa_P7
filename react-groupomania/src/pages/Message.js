@@ -1,8 +1,6 @@
 import React from 'react';
-import Button_deconnect from '../components/Button_deconnect';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../styles/Message.css'
-import { NavLink } from 'react-router-dom';
+import NavLinkMenu from '../components/Nav/NavlinkMenu';
 
 const Message = () => {
   return ( 
@@ -13,22 +11,7 @@ const Message = () => {
           src='images/icon-left-font-monochrome-white.svg'
           alt='logo entreprise'
         /> 
-          <nav className='nav'>
-            <ul className='nav_list'>
-            <NavLink to ="/Forum">
-                <FontAwesomeIcon className='i' icon="fas fa-home"/>
-              </NavLink>
-              <NavLink to="/message">
-                <FontAwesomeIcon className='i' icon="fa-comments"/>
-              </NavLink>
-            <div>
-              <NavLink to="/Profil">
-                <FontAwesomeIcon className='i' icon="fas fa-user-edit"/>
-              </NavLink>
-            </div>
-        <Button_deconnect/>
-            </ul>
-          </nav>
+          <NavLinkMenu/>
         </div>
       </div> 
        <div className='message_body'>

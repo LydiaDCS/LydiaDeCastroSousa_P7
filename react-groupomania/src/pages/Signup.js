@@ -3,6 +3,7 @@ import "../styles/Signup.css"
 import { NavLink } from 'react-router-dom';
 import "../styles/Header.css"
 import {useForm} from 'react-hook-form';
+import Header from '../components/Header/Header';
 
 
 const Signup = () => {
@@ -35,12 +36,7 @@ const Signup = () => {
 
     return (
     <div>
-      <div className='logo'>
-    <img
-    src='images/icon-left-font-monochrome-white.svg'
-    alt='logo entreprise'
-    />
-    </div>
+     <Header/>
         <div className='log'>
         <div>
         <NavLink to = "/Login" >

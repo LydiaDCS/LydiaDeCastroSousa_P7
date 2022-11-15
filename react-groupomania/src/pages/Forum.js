@@ -1,124 +1,86 @@
-import React, { useEffect, useState } from 'react';
-import "../styles/Forum.css";
-import Button_deconnect from '../components/Button_deconnect';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import '../styles/Forum.css'
+import NavLinkMenu from '../components/Nav/NavlinkMenu';
+import {useForm} from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
+import NavlinkMenu_Desktop from '../components/Nav/NavlinkMenu_Desktop';
 
-const Forum = (title, content, attachment, like) => {
-  let lastname =localStorage.getItem("lastname");
-  let firstname =localStorage.getItem("firstname");
-  let token = localStorage.getItem("token");
 
-  //afficher les messages
-  const [message, setMessage] = useState([]);
+const Forum = () => {
+
+let lastName =localStorage.getItem("lastname");
+let firstname =localStorage.getItem("firstname");
+let token =localStorage.getItem("token");
+
   
-  useEffect(()=>{
-    fetch("http://localhost:5050/api/forum",{
-      method: 'GET',
-      headers: {
-        'Authorization':'Bearer ' + token
-      }
-    })
-    .then(message => setMessage(message)) 
-    .catch(err => console.log(err))
-},[])
+  const {register, handleSubmit, formState:{errors}} = useForm();
+// Poster un message
+    const sendRequest = ({title, content, attachment, like}) => {
+      fetch("http://localhost:5050/api/user/Forum",{
+        method: 'POST',
+        headers: {
+          'Authorization':'bearer',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title,
+          content,
+          attachment,
+          like,
+        })
+      })
+      .then((res) => {
+        if (res.ok) {
+            return res.json();
+        } else{
+          alert ("Impossible de poster le message");
+        }
+      })
+      .then((data)=>{
+       let  message = data.message;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
 
-  //envoyer message
-    const sendMessage = (e)=>{
-        fetch("http://localhost:5050/api/forum",{
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              title:e.target.title,
-              content:e.target.content,
-              attachment:e.target.attachment,
-              likes:0
-            })
-          })
-          .then((res) => {
-            if (res.ok) {
-            } alert ("Message posté !");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        } 
-
-    return ( 
-    <div> 
-      <div className='logo'>
+    return (
+    <div className='logo'>
         <div className='header'>
-        <img
+          <img
           src='images/icon-left-font-monochrome-white.svg'
-          alt='logo entreprise'
-        /> 
-          <nav className='nav'>
-          <h4> Bienvenue {firstname} </h4> <br/>
-            <ul className='nav_list'>
-            <NavLink to ="/Forum">
-                <FontAwesomeIcon className='i' icon="fas fa-home"/>
-              </NavLink>
-              <NavLink to="/message">
-                <FontAwesomeIcon className='i' icon="fa-comments"/>
-              </NavLink>
-            <div>
-              <NavLink to="/Profil">
-                <FontAwesomeIcon className='i' icon="fas fa-user-edit"/>
-              </NavLink>
-            </div>
-        <Button_deconnect/>
-            </ul>
-          </nav>
-        </div>
-      </div> 
-        <div className='page'>
-        <ul className='nav_list_desktop'>
-              <NavLink to ="/Forum">
-                <FontAwesomeIcon className='i' icon="fas fa-home"/>
-              </NavLink>
-              <NavLink to="/message">
-                <FontAwesomeIcon className='i_desktop' icon="fa-comments"/>
-              </NavLink>
-            <div>
-              <NavLink to="/Profil">
-                <FontAwesomeIcon className='i_desktop' icon="fas fa-user-edit"/>
-              </NavLink>
-            </div>
-            <NavLink to ="/login">
-              <FontAwesomeIcon className='i_desktop' icon="fas fa-sign-out-alt"/>
-            </NavLink>
-        </ul>
-        <section className='main'>
-        <div className="poster">
-        <form onSubmit={sendMessage} >
-            <div className="poster-header">
-                <img alt="profil" className="profil-picture-forum" src="" />
-                <p>{lastname} {firstname}</p> 
-            </div>
-            <div className='poster-main'>
-            <label htmlFor="text-post"></label>
-            <input type="text" placeholder='Titre' className="titre-post" ></input>
-            <br/><br/>
-            <textarea type="text" name="text-post" className="text-post" id="text-post" placeholder="Exprimez-vous" ></textarea>
-            <br/>
-                <input type="file" id="file-input-poster" className='buttons' accept="images/*"/>
-            </div>
+          alt='logo entreprise'/>
 
-<button type="submit" id="submit-post"> Envoyer</button>
-        </form>
+        <nav className='nav'>
+          <h4>Bienvenue {firstname}</h4><br/>
+          <NavLinkMenu/>
+          <NavlinkMenu_Desktop/>
+        </nav>
+        <div>
+    </div>
         </div>
-        <br/>
+        <form className='page' onSubmit={handleSubmit((sendRequest))}>
+        <label htmlFor="title">Titre :</label>
+        <input {...register ("title", {required:true})} type="text" placeholder="Titre" autoComplete='off' 
+        />
+        <p className='msgerror'>{errors.title && <span> Ce champ est obligatoire</span>}</p>
         
-        </section>
-        </div>
+        <label htmlFor="content">message :</label>
+        <input type="text" {...register ("content", {required:true , minlengh:2})} placeholder="Message" autoComplete='off'
+        />
+        <p className='msgerror'>{errors.content && <span> Ce champ est obligatoire</span>}</p>
+
+      
+        <button type="submit">
+           Envoyer 
+        </button>
+        </form> 
         <div className='footer'>
       <p>Groupomania - Copyright2022@</p>
-        </div>
-         
-        </div>
-    );
-};
+    </div>
+    </div> 
+  );
+}
+
 export default Forum;
