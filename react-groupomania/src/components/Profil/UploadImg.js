@@ -8,7 +8,7 @@ const uploadimg = () => {
     <div>
        <form action="" onSubmit={handlePicture} className="upload-pic">
         <label htmlFor='file'>Changer d'image</label>
-        <input type="file" id="file" name="file" accept=".jpg, .jpeg, .png"/>
+        <input type="file" id="file" name="file" accept="image/jpg, image/jpeg, image/png" />
       </form>
     </div>
   );

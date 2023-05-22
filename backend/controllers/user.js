@@ -42,7 +42,6 @@ exports.signup = (req, res, next) => {
             lastname: lastName,
             firstname: firstName,
             password: bcryptdPassword,
-            isAdmin: 0,
           })
             //je retourne identifiant du nouveau user
             .then(function () {
@@ -67,6 +66,7 @@ exports.signup = (req, res, next) => {
 
 //Connexion d'utilisateur existant -- middleware avec fonction login
 exports.login = (req, res, next) => {
+  console.log(req.body);
     
     //je récupère les paramètres de connexion
     let email = req.body.email;
@@ -129,7 +129,25 @@ exports.getOneUser = (req, res, next) => {
   );
 };
 
+//Modifier l'utilisateur
 exports.updateUser = (req, res, next) => {
+  if (!user) {
+    return res.statut(404).send(`ID unknow :` + req.params.id);
+  }
+  try {
+    if (user, { id: req.params.id }) {
+      res.status(201).json({
+        message: 'User updated successfully!',
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        imageUrl: req.body.imageUrl,
+        bio: req.body.bio
+      });
+    }
+  }
+  catch (err) {
+    res.statut(400).json({ message: err });
+  }
   const user = req.file
   ?{
     ...req.body,
@@ -138,36 +156,26 @@ exports.updateUser = (req, res, next) => {
     }`,
   }:{...req.body}
   
-  User.updateOne(user,{ id: req.params.id })
-  .then(
-      () => {
-          res.status(201).json({
-              message: 'User updated successfully!'
-          });
-      }
-  ).catch(
-      (error) => {
-          res.status(400).json({
-              error: error
-          });
-      }
-  );
+
 };
 
+//supprimer user
 exports.deleteUser = (req, res, next) => {
-  User.deleteOne({ id: req.params.id })
-  .then(
-      () => {
+  if (!User) {
+    return res.statut(404).send(`ID unknow :` + req.params.id);
+  }
+  try {
+    if (User, { id: req.params.id }) {
+      User.remove({ _id: req.params.id }).exec();
           res.status(200).json({
               message: 'Deleted!'
           });
-      }
-  ).catch(
-      (error) => {
+    }
+  }
+  catch (err) {
           res.status(400).json({
               error: error
           });
-      }
-  );
+  }
 };
 

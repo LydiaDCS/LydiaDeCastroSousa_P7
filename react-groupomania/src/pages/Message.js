@@ -2,6 +2,8 @@ import React from 'react';
 import '../styles/Message.css'
 import NavLinkMenu from '../components/Nav/NavlinkMenu';
 
+
+
 const Message = () => {
   return ( 
     <div> 

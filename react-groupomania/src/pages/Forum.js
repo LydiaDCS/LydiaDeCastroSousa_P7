@@ -1,22 +1,21 @@
-import React from 'react';
+/*import React, { useState } from 'react';*/
 import '../styles/Forum.css'
 import NavLinkMenu from '../components/Nav/NavlinkMenu';
 import {useForm} from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
-import NavlinkMenu_Desktop from '../components/Nav/NavlinkMenu_Desktop';
+/* import { NavLink } from 'react-router-dom'; */
+/* import NavlinkMenu_Desktop from '../components/Nav/NavlinkMenu_Desktop'; */
+/* import { useState, useEffect } from 'react';//pour ecrire un post 
+// useeffect pour mettre a jour et afficher post apres avoir publier le msg */
 
 
-const Forum = () => {
+const Message = (Post, updatePost) => {
+  let firstname = localStorage.getItem("firstname");
 
-let lastName =localStorage.getItem("lastname");
-let firstname =localStorage.getItem("firstname");
-let token =localStorage.getItem("token");
 
-  
   const {register, handleSubmit, formState:{errors}} = useForm();
 // Poster un message
     const sendRequest = ({title, content, attachment, like}) => {
-      fetch("http://localhost:5050/api/user/Forum",{
+      fetch("http://localhost:5050/api/user/forum", {
         method: 'POST',
         headers: {
           'Authorization':'bearer',
@@ -37,13 +36,12 @@ let token =localStorage.getItem("token");
           alert ("Impossible de poster le message");
         }
       })
-      .then((data)=>{
-       let  message = data.message;
-      })
+        .then(({ data }) => console.log(data))
       .catch((err) => {
         console.log(err);
       });
-    }
+  } 
+
 
     return (
     <div className='logo'>
@@ -55,7 +53,7 @@ let token =localStorage.getItem("token");
         <nav className='nav'>
           <h4>Bienvenue {firstname}</h4><br/>
           <NavLinkMenu/>
-          <NavlinkMenu_Desktop/>
+
         </nav>
         <div>
     </div>
@@ -71,11 +69,13 @@ let token =localStorage.getItem("token");
         />
         <p className='msgerror'>{errors.content && <span> Ce champ est obligatoire</span>}</p>
 
-      
+
+
         <button type="submit">
            Envoyer 
         </button>
         </form> 
+
         <div className='footer'>
       <p>Groupomania - Copyright2022@</p>
     </div>
@@ -83,4 +83,5 @@ let token =localStorage.getItem("token");
   );
 }
 
-export default Forum;
+export default Message;
+

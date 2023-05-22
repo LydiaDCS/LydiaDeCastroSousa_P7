@@ -13,8 +13,11 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
 //Importation des routes
-const forumRoutes = require('./routes/forum');
-const userRoutes = require('./routes/user');
+/*const postRoutes = require('./routes/post.routes');*/
+const userRoutes = require('./routes/user.routes');
+const commentRoutes = require('./routes/comment.routes');
+const postRoutes = require('./routes/post.routes');
+
 
 //Accès au chemin de notre système de fichiers
 const path = require('path');
@@ -30,10 +33,12 @@ const limiter = rateLimit({
 
 //je crée mon app avec express
 const app = express();
-const bodyparser = require("body-parser");
+const bodyParser = require("body-parser");
 
 //utilise pour analyser les corps json (comme bodyparser)
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //Gestion des erreurs CORS
 app.use((req, res, next) => {
@@ -64,8 +69,9 @@ database.authenticate()
 
 
 //j'enregistre les routes
-app.use('/api/forum', forumRoutes)
+app.use('/api/post', postRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/comment', commentRoutes);
 
 
 //middleware pour servir dossier images

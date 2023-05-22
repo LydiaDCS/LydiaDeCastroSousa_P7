@@ -6,7 +6,6 @@ const router = express.Router();
 
 //j'importe middleware d'authentification
 const auth = require('../middleware/auth');
-
 //j'importe middleware gestion enregistrement de fichiers (pour fichier images)
 const multer = require('../middleware/multer-config');
 
@@ -14,11 +13,9 @@ const multer = require('../middleware/multer-config');
 const userctrl = require('../controllers/user');
 const password = require('../middleware/password');
 
-//je crée mes routes et envoie mes infos
+//User CRUD
 router.post('/signup', password, userctrl.signup);
 router.post('/login', userctrl.login);
-
-
 router.get('/:id',auth, userctrl.getOneUser);
 router.put('/:id', auth, multer, userctrl.updateUser);
 router.delete('/:id',auth, userctrl.deleteUser);
